@@ -19,7 +19,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Charts SerialPort Multimed
 # Add all your source files here
 add_executable(SimVital
     app/main.cpp
-    # src/parsers/MitBihParser.cpp  <-- Uncomment this when you start Issue #15
+    core/src/MitBihParser.cpp 
 )
 
 # Link Qt libraries (Updated with the new modules you installed)
