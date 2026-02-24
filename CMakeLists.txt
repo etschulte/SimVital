@@ -20,6 +20,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Charts SerialPort Multimed
 add_executable(SimVital
     app/main.cpp
     core/src/MitBihParser.cpp 
+    core/src/RingBuffer.cpp
 )
 
 # Link Qt libraries (Updated with the new modules you installed)

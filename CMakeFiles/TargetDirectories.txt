@@ -1,0 +1,5 @@
+/mnt/New Volume/School/2026_Spring/SENG499/SimVital/CMakeFiles/SimVital.dir
+/mnt/New Volume/School/2026_Spring/SENG499/SimVital/CMakeFiles/edit_cache.dir
+/mnt/New Volume/School/2026_Spring/SENG499/SimVital/CMakeFiles/rebuild_cache.dir
+/mnt/New Volume/School/2026_Spring/SENG499/SimVital/CMakeFiles/SimVital_autogen_timestamp_deps.dir
+/mnt/New Volume/School/2026_Spring/SENG499/SimVital/CMakeFiles/SimVital_autogen.dir

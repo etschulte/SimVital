@@ -6,7 +6,7 @@ MitBihParser::MitBihParser() : secondSamplePending(false), pendingSampleVal(0) {
 //Nothing to cleanup so deconstructor can be empty
 MitBihParser::~MitBihParser(){}
 
-bool MitBihParser::loadFile(const std::string& filePath) {
+bool MitBihParser::loadFile(const std::string &filePath) {
 
     //close file if one is already open
     if (fileStream.is_open()) {
@@ -23,7 +23,7 @@ bool MitBihParser::loadFile(const std::string& filePath) {
     return fileStream.is_open();
 }
 
-bool MitBihParser::getNextVal(int& value) {
+bool MitBihParser::getNextVal(int &value) {
     
     //if we have a leftover sample, use that
     if (secondSamplePending) {
