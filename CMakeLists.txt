@@ -21,6 +21,7 @@ add_executable(SimVital
     app/main.cpp
     core/src/MitBihParser.cpp 
     core/src/RingBuffer.cpp
+    app/controllers/EcgController.cpp
 )
 
 # Link Qt libraries (Updated with the new modules you installed)
