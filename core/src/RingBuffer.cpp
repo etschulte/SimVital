@@ -1,4 +1,4 @@
-#include "RingBuffer.hpp"
+#include "../include/RingBuffer.hpp"
 
 RingBuffer::RingBuffer(int size){
     capacity = size;

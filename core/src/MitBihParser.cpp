@@ -1,4 +1,5 @@
-#include "MitBihParser.hpp"
+#include "../include/MitBihParser.hpp"
+
 
 //Constructor setting default values for variables
 MitBihParser::MitBihParser() : secondSamplePending(false), pendingSampleVal(0) {}

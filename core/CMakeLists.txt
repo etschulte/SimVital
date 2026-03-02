@@ -4,6 +4,8 @@ project(SimVitalCore)
 add_library(SimVitalCore STATIC
     src/PatientData.cpp
     src/WaveFormGenerator.cpp
+    src/MitBihParser.cpp
+    src/RingBuffer.cpp
 )
 
 # Tells any app using this library to look in include folder for headers

@@ -16,20 +16,5 @@ set(CMAKE_PREFIX_PATH "/home/evan/Qt/6.10.2/gcc_64")
 # Find Packages
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Charts SerialPort Multimedia)
 
-# Add all your source files here
-add_executable(SimVital
-    app/main.cpp
-    core/src/MitBihParser.cpp 
-    core/src/RingBuffer.cpp
-    app/controllers/EcgController.cpp
-)
-
-# Link Qt libraries (Updated with the new modules you installed)
-target_link_libraries(SimVital PRIVATE 
-    Qt6::Core 
-    Qt6::Gui 
-    Qt6::Widgets 
-    Qt6::Charts 
-    Qt6::SerialPort
-    Qt6::Multimedia
-)
+add_subdirectory(core)
+add_subdirectory(app)
