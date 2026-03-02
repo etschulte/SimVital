@@ -1,11 +1,10 @@
-#include <QApplication>
-#include <QLabel>
+#include <QGuiApplication>
 
-#include "../core/src/MitBihParser.hpp"
-#include "../core/src/RingBuffer.hpp"
+#include "../core/include/MitBihParser.hpp"
+#include "../core/include/RingBuffer.hpp"
 
 int main(int argc, char *argv[]) {
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
     MitBihParser parser;
     RingBuffer buffer(1024);

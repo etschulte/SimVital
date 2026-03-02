@@ -5,6 +5,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Sql)
 # Create executable
 add_executable(SimVitalApp
     main.cpp
+    controllers/EcgController.hpp
     controllers/EcgController.cpp
 )
 
