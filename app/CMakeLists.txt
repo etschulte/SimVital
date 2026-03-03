@@ -1,12 +1,28 @@
 project(SimVitalApp)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Sql)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Sql Qml)
+
+qt_policy(SET QTP0001 NEW)
 
 # Create executable
 add_executable(SimVitalApp
     main.cpp
     controllers/EcgController.hpp
     controllers/EcgController.cpp
+)
+
+set_source_files_properties(qml/main.qml
+    PROPERTIES
+    QT_RESOURCE_ALIAS
+    main.qml
+)
+
+qt_add_qml_module(SimVitalApp 
+    URI SimVital 
+    VERSION 1.0 
+    QML_FILES
+        qml/main.qml
+        # add future screens here
 )
 
 # Gives access to SimVitalCore's headers
@@ -16,4 +32,5 @@ target_link_libraries(SimVitalApp PRIVATE
     Qt6::Sql
     Qt6::Gui
     Qt6::Core
+    Qt6::Qml
 )
