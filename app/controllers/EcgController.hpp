@@ -7,9 +7,10 @@
 
 
 class EcgController : public QObject {
-private:
     Q_OBJECT // QObject Macro
     Q_PROPERTY(int ecgVal READ getEcgVal NOTIFY ecgValChanged) // QProperty Macro
+
+private:
     MitBihParser* parserPtr; // Pointer to the MitBihParser so that we can use that object when created in main
     RingBuffer* bufferPtr; // Pointer to RingBuffer so we can use that object when created in main
     QTimer* timerPtr; // Pointer to QTimer to act as a pacemaker for pulling data
@@ -17,7 +18,7 @@ private:
 
 public:
     // Contstructor and destructor 
-    EcgController(MitBihParser* parserPtr, RingBuffer* bufferPtr, QObject* parent = nullptr);
+    EcgController(MitBihParser* parser, RingBuffer* buffer, QObject* parent = nullptr);
     ~EcgController();
 
     // getter class for ECG value
@@ -29,7 +30,7 @@ public:
 
 signals:
     // Signals that the ECG value has changed
-    void ecgValChanged(int recentEcgVal);
+    void ecgValChanged(int ecgVal);
 
 private slots:
     // Callback for QTimer to grab next number from buffer
