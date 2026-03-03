@@ -15,6 +15,10 @@ void fillBuffer(MitBihParser* parser, RingBuffer* buffer, std::atomic<bool>& fla
         // break if we run out of file data
         if (!parser->getNextVal(val)) break;
 
+        // gets rid of a value to get data from only channel 1
+        int dummyVal;
+        if (!parser->getNextVal(dummyVal)) break;
+
         // keep trying to write the same value until there is space
         while (!buffer->write(val)) {
 
