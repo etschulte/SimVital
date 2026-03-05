@@ -22,7 +22,7 @@ qt_add_qml_module(SimVitalApp
     VERSION 1.0 
     QML_FILES
         qml/main.qml
-        # add future screens here
+        qml/ReadingsBox.qml
 )
 
 # Gives access to SimVitalCore's headers
