@@ -145,19 +145,66 @@ Window {
                         }
                     }
 
-                    Rectangle {
+                    Canvas {
+                        id: spo2Canvas
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-                        color: "#2a2a2a"
-                        radius: 8
+                        onPaint: {
+                            var ctx = getContext("2d");
+                            ctx.clearRect(0, 0, width, height);
 
-                        Text {
-                            text: "SpO2 Waveform Placeholder"
-                            color: "#555555"
-                            font.pixelSize: 18
-                            anchors.centerIn: parent
+                            // --- 1. THE MINOR GRID (Faint background) ---
+                            var minorStep = 10; // 10 pixels per small square
+                            ctx.beginPath();
+                            ctx.strokeStyle = "#0f2b0f"; // Very dark, faint green
+                            ctx.lineWidth = 1;
+
+                            // Vertical minor lines
+                            for (var x = 0; x <= width; x += minorStep) {
+                                ctx.moveTo(x, 0);
+                                ctx.lineTo(x, height);
+                            }
+                            // Horizontal minor lines
+                            for (var y = 0; y <= height; y += minorStep) {
+                                ctx.moveTo(0, y);
+                                ctx.lineTo(width, y);
+                            }
+                            ctx.stroke(); // Physically draw all minor lines at once
+
+
+                            // --- 2. THE MAJOR GRID (Slightly brighter/thicker) ---
+                            var majorStep = 50; // 50 pixels per large square (5 minor squares)
+                            ctx.beginPath();
+                            ctx.strokeStyle = "#1a4d1a"; // Slightly brighter green
+                            ctx.lineWidth = 1.5;
+
+                            // Vertical major lines
+                            for (var x = 0; x <= width; x += majorStep) {
+                                ctx.moveTo(x, 0);
+                                ctx.lineTo(x, height);
+                            }
+                            // Horizontal major lines
+                            for (var y = 0; y <= height; y += majorStep) {
+                                ctx.moveTo(0, y);
+                                ctx.lineTo(width, y);
+                            }
+                            ctx.stroke(); // Physically draw all major lines at once
                         }
                     }
+
+                    // Rectangle {
+                    //     Layout.fillWidth: true
+                    //     Layout.fillHeight: true
+                    //     color: "#2a2a2a"
+                    //     radius: 8
+
+                    //     Text {
+                    //         text: "SpO2 Waveform Placeholder"
+                    //         color: "#555555"
+                    //         font.pixelSize: 18
+                    //         anchors.centerIn: parent
+                    //     }
+                    // }
                 }
 
             GridLayout {
