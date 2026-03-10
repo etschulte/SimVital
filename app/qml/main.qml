@@ -228,7 +228,7 @@ Window {
                     Layout.fillHeight: true
                     titleText: "HR"
                     unitText: "bpm"
-                    valueText: "--"
+                    valueText: ecgController.hrVal
                     valueColor: "#00ff00"
                 }
 
