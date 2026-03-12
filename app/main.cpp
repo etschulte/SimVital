@@ -3,10 +3,13 @@
 #include <QQmlContext>
 #include <thread>
 #include <chrono>
+#include <QDebug>
 
 #include "../core/include/MitBihParser.hpp"
 #include "../core/include/RingBuffer.hpp"
 #include "controllers/EcgController.hpp"
+#include "../core/include/ScenarioManager.hpp"
+#include "../core/include/PatientScenario.hpp"
 
 void fillBuffer(MitBihParser* parser, RingBuffer* buffer, std::atomic<bool>& flag) {
     while(!flag) {
@@ -59,6 +62,26 @@ int main(int argc, char *argv[]) {
     // telling the QML engine to load the main qml file
     const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml"));
     engine.load(url);
+
+
+
+
+    // --- TEMPORARY SCENARIO TEST ---
+    ScenarioManager manager;
+    
+    PatientScenario testScenario = manager.loadScenario("data/normal.json");
+
+    qDebug() << "=== SCENARIO LOAD TEST ===";
+    qDebug() << "Name:" << testScenario.name;
+    qDebug() << "ECG File:" << testScenario.ecgFile;
+    qDebug() << "Target SpO2:" << testScenario.spo2;
+    qDebug() << "Target RR:" << testScenario.respiratoryRate;
+    qDebug() << "Target Systolic:" << testScenario.nibpSystolic;
+    qDebug() << "==========================";
+    // -------------------------------
+
+
+    
 
     int exitCode = app.exec();
 
