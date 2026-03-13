@@ -3,7 +3,7 @@ project(SimVitalCore)
 # Create the library
 add_library(SimVitalCore STATIC
     src/PatientData.cpp
-    src/WaveFormGenerator.cpp
+    src/SpO2Generator.cpp
     src/MitBihParser.cpp
     src/RingBuffer.cpp
     src/ScenarioManager.cpp
