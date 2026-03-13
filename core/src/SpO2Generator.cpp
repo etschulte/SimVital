@@ -1,6 +1,8 @@
 #include "../include/PatientScenario.hpp"
 #include "../include/SpO2Generator.hpp"
 
+#include <QRandomGenerator>
+
 SpO2Generator::SpO2Generator(int targetVal, QObject* parent) 
     : QObject(parent),
     targetVal(targetVal),
@@ -14,6 +16,28 @@ SpO2Generator::SpO2Generator(int targetVal, QObject* parent)
 }
 
 void SpO2Generator::createNoise() {
+    int randNum = QRandomGenerator::global()->bounded(1, 101);
+
+    if (randNum >= 80 && randNum < 90) {
+        currentVal++;
+    }
+    else if (randNum >= 90 && randNum < 100) {
+        currentVal--;
+    }
+
+    if (currentVal > (targetVal + 2)) {
+        currentVal--;
+    }
+    
+    if (currentVal < (targetVal - 2)) {
+        currentVal++;
+    }
+
+    if (currentVal > 100) {
+        currentVal = 100;
+    }
+
+    emit spO2ValChanged(currentVal);
 
 }
 

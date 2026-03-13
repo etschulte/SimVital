@@ -9,6 +9,8 @@ add_executable(SimVitalApp
     main.cpp
     controllers/EcgController.hpp
     controllers/EcgController.cpp
+    controllers/SpO2Controller.hpp
+    controllers/SpO2Controller.cpp
 )
 
 set_source_files_properties(qml/main.qml
