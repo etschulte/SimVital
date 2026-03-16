@@ -228,7 +228,7 @@ Window {
                     Layout.fillHeight: true
                     titleText: "HR"
                     unitText: "bpm"
-                    valueText: ecgController.hrVal
+                    valueText: ecgController ? ecgController.hrVal : "--"
                     valueColor: "#00ff00"
                 }
 
@@ -237,7 +237,7 @@ Window {
                     Layout.fillHeight: true
                     titleText: "SpO2"
                     unitText: "%"
-                    valueText: "--"
+                    valueText: spo2Controller ? spo2Controller.spO2Val : "--"
                     valueColor: "#00bfff"
                 }
 

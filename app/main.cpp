@@ -10,6 +10,8 @@
 #include "controllers/EcgController.hpp"
 #include "../core/include/ScenarioManager.hpp"
 #include "../core/include/PatientScenario.hpp"
+#include "controllers/SpO2Controller.hpp"
+#include "../core/include/SpO2Generator.hpp"
 
 void fillBuffer(MitBihParser* parser, RingBuffer* buffer, std::atomic<bool>& flag) {
     while(!flag) {
@@ -42,8 +44,12 @@ int main(int argc, char *argv[]) {
     
     MitBihParser parser;
     RingBuffer buffer(1024);
+    ScenarioManager manager;
 
+    PatientScenario scenario = manager.loadScenario("data/normal.json");
     std::string testFile = "data/100.dat";
+
+    SpO2Generator generator(scenario.spo2);
 
     // loading data file
     if (!parser.loadFile(testFile)) {
@@ -55,28 +61,24 @@ int main(int argc, char *argv[]) {
     std::thread fillBufferThread(fillBuffer, &parser, &buffer, std::ref(flag));
 
     EcgController ecgController(&parser, &buffer);
+    engine.rootContext()->setContextProperty("ecgController", &ecgController); // put ecgController into global context so that QML files can see it
 
-    // put ecgController into global context so that QML files can see it
-    engine.rootContext()->setContextProperty("ecgController", &ecgController);
+    SpO2Controller spo2Controller(&generator);
+    engine.rootContext()->setContextProperty("spo2Controller", &spo2Controller);
 
-    // telling the QML engine to load the main qml file
-    const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml"));
+    const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml")); // telling the QML engine to load the main qml file
     engine.load(url);
 
 
 
 
     // --- TEMPORARY SCENARIO TEST ---
-    ScenarioManager manager;
-    
-    PatientScenario testScenario = manager.loadScenario("data/normal.json");
-
     qDebug() << "=== SCENARIO LOAD TEST ===";
-    qDebug() << "Name:" << testScenario.name;
-    qDebug() << "ECG File:" << testScenario.ecgFile;
-    qDebug() << "Target SpO2:" << testScenario.spo2;
-    qDebug() << "Target RR:" << testScenario.respiratoryRate;
-    qDebug() << "Target Systolic:" << testScenario.nibpSystolic;
+    qDebug() << "Name:" << scenario.name;
+    qDebug() << "ECG File:" << scenario.ecgFile;
+    qDebug() << "Target SpO2:" << scenario.spo2;
+    qDebug() << "Target RR:" << scenario.respiratoryRate;
+    qDebug() << "Target Systolic:" << scenario.nibpSystolic;
     qDebug() << "==========================";
     // -------------------------------
 
