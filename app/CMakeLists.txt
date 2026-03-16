@@ -11,6 +11,8 @@ add_executable(SimVitalApp
     controllers/EcgController.cpp
     controllers/SpO2Controller.hpp
     controllers/SpO2Controller.cpp
+    ../core/include/SpO2Generator.hpp
+    
 )
 
 set_source_files_properties(qml/main.qml

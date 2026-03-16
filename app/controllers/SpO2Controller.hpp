@@ -13,7 +13,7 @@ private:
     SpO2Generator* generatorPtr;
     
 public:
-    SpO2Controller(SpO2Generator* generatorPtr, QObject* parent = nullptr);
+    SpO2Controller(SpO2Generator* generator, QObject* parent = nullptr);
 
     int getSpO2Val() const;
 
@@ -21,6 +21,5 @@ public slots:
     void updateSpO2Val(int spO2Val);
 
 signals:
-    
-
+    void spO2ValChanged();
 };
