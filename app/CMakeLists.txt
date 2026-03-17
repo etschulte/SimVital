@@ -15,9 +15,12 @@ add_executable(SimVitalApp
     controllers/SpO2WaveController.cpp
     controllers/RrController.hpp
     controllers/RrController.cpp
+    controllers/NibpController.hpp
+    controllers/NibpController.cpp
     ../core/include/SpO2Generator.hpp
     ../core/include/SpO2WaveGenerator.hpp
     ../core/include/RrGenerator.hpp
+    ../core/include/NibpGenerator.hpp
     
 )
 
