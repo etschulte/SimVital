@@ -12,6 +12,8 @@
 #include "../core/include/PatientScenario.hpp"
 #include "controllers/SpO2Controller.hpp"
 #include "../core/include/SpO2Generator.hpp"
+#include "controllers/SpO2WaveController.hpp"
+#include "../core/include/SpO2WaveGenerator.hpp"
 
 void fillBuffer(MitBihParser* parser, RingBuffer* buffer, std::atomic<bool>& flag) {
     while(!flag) {
@@ -49,7 +51,8 @@ int main(int argc, char *argv[]) {
     PatientScenario scenario = manager.loadScenario("data/normal.json");
     std::string testFile = "data/100.dat";
 
-    SpO2Generator generator(scenario.spo2);
+    SpO2Generator spo2Generator(scenario.spo2);
+    SpO2WaveGenerator spo2WaveGenerator;
 
     // loading data file
     if (!parser.loadFile(testFile)) {
@@ -63,8 +66,11 @@ int main(int argc, char *argv[]) {
     EcgController ecgController(&parser, &buffer);
     engine.rootContext()->setContextProperty("ecgController", &ecgController); // put ecgController into global context so that QML files can see it
 
-    SpO2Controller spo2Controller(&generator);
+    SpO2Controller spo2Controller(&spo2Generator);
     engine.rootContext()->setContextProperty("spo2Controller", &spo2Controller);
+
+    SpO2WaveController spo2WaveController(&spo2WaveGenerator);
+    engine.rootContext()->setContextProperty("spo2WaveController", &spo2WaveController);
 
     const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml")); // telling the QML engine to load the main qml file
     engine.load(url);

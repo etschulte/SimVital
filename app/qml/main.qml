@@ -30,6 +30,21 @@ Window {
         }
     }
 
+    property var spo2History: []
+
+    Connections {
+        target: spo2WaveController
+        function onWaveValChanged(spO2Val) {
+            spo2History.push(spO2Val)
+
+            if (ecgHistory.length > maxPoints) {
+                ecgHistory.shift()
+            }
+
+            spo2Canvas.requestPaint()
+        }
+    }
+
         ColumnLayout {
             anchors.fill: parent
             anchors.margins: 15
@@ -189,6 +204,39 @@ Window {
                                 ctx.lineTo(width, y);
                             }
                             ctx.stroke(); // Physically draw all major lines at once
+
+                            ctx.strokeStyle = "#00bfff";
+                            ctx.lineWidth = 2;
+                            ctx.lineJoin = "round";
+                            
+                            ctx.beginPath();
+                            
+                            var xStep = width / maxPoints;
+                            
+                            // 1. Find the exact vertical center of the canvas
+                            var centerY = height / 2;
+                            
+                            // 2. Set the expected baseline (MIT-BIH is usually 1024, sometimes 0)
+                            var baseline = 0; 
+                            
+                            // 3. Set a scale factor (Higher number = shorter waveform)
+                            var gain = 50; 
+                            
+                            for (var i = 0; i < spo2History.length; i++) {
+                                var x = i * xStep;
+                                
+                                // --- THE NEW SCALING MATH ---
+                                // Subtract the baseline first, then scale it, then apply it to the center
+                                var normalizedValue = (spo2History[i] - baseline) * gain;
+                                var y = centerY - normalizedValue; 
+                                
+                                if (i === 0) {
+                                    ctx.moveTo(x, y);
+                                } else {
+                                    ctx.lineTo(x, y);
+                                }
+                            }   
+                            ctx.stroke();
                         }
                     }
 
