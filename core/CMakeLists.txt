@@ -8,6 +8,7 @@ add_library(SimVitalCore STATIC
     src/RingBuffer.cpp
     src/ScenarioManager.cpp
     src/SpO2WaveGenerator.cpp
+    src/RrGenerator.cpp
 )
 
 # Tells any app using this library to look in include folder for headers

@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QTimer>
 
-class SpO2Generator : public QObject {
+class RrGenerator : public QObject {
     Q_OBJECT
 
 private: 
@@ -12,12 +12,11 @@ private:
     QTimer* timerPtr;
 
 public:
-    SpO2Generator(int targetVal, QObject* parent = nullptr);
+    RrGenerator(int targetVal, QObject* parent = nullptr);
 
 signals:
-    void spO2ValChanged(int newVal);
+    void rrValChanged(int newVal);
 
 private slots:
     void createNoise();
-
 };

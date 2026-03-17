@@ -294,7 +294,7 @@ Window {
                     Layout.fillHeight: true
                     titleText: "RR"
                     unitText: "rpm"
-                    valueText: "--"
+                    valueText: rrController ? rrController.rrVal : "--"
                     valueColor: "#ffff00"
                 }
             }

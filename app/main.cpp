@@ -15,6 +15,8 @@
 #include "../core/include/SpO2Generator.hpp"
 #include "controllers/SpO2WaveController.hpp"
 #include "../core/include/SpO2WaveGenerator.hpp"
+#include "controllers/RrController.hpp"
+#include "../core/include/RrGenerator.hpp"
 
 void fillBuffer(MitBihParser* parser, RingBuffer* buffer, std::atomic<bool>& flag) {
     while(!flag) {
@@ -55,6 +57,8 @@ int main(int argc, char *argv[]) {
     SpO2Generator spo2Generator(scenario.spo2);
     SpO2WaveGenerator spo2WaveGenerator;
 
+    RrGenerator rrGenerator(scenario.respiratoryRate);
+
     // loading data file
     if (!parser.loadFile(testFile)) {
         qDebug() << "Could not find file";
@@ -74,6 +78,9 @@ int main(int argc, char *argv[]) {
 
     SpO2WaveController spo2WaveController(&spo2WaveGenerator);
     engine.rootContext()->setContextProperty("spo2WaveController", &spo2WaveController);
+
+    RrController rrController(&rrGenerator);
+    engine.rootContext()->setContextProperty("rrController", &rrController);
 
     const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml")); // telling the QML engine to load the main qml file
     engine.load(url);

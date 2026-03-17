@@ -6,7 +6,7 @@ SpO2Controller::SpO2Controller(SpO2Generator* generator, QObject* parent)
     latestSpO2Val(0) 
     {
     connect(generatorPtr, &SpO2Generator::spO2ValChanged, this, &SpO2Controller::updateSpO2Val);
-};
+}
 
 
 int SpO2Controller::getSpO2Val() const {
