@@ -17,6 +17,8 @@
 #include "../core/include/SpO2WaveGenerator.hpp"
 #include "controllers/RrController.hpp"
 #include "../core/include/RrGenerator.hpp"
+#include "controllers/NibpController.hpp"
+#include "../core/include/NibpGenerator.hpp"
 
 void fillBuffer(MitBihParser* parser, RingBuffer* buffer, std::atomic<bool>& flag) {
     while(!flag) {
@@ -59,6 +61,8 @@ int main(int argc, char *argv[]) {
 
     RrGenerator rrGenerator(scenario.respiratoryRate);
 
+    NibpGenerator nibpGenerator(scenario.nibpSystolic, scenario.nibpDiastolic);
+
     // loading data file
     if (!parser.loadFile(testFile)) {
         qDebug() << "Could not find file";
@@ -82,24 +86,11 @@ int main(int argc, char *argv[]) {
     RrController rrController(&rrGenerator);
     engine.rootContext()->setContextProperty("rrController", &rrController);
 
+    NibpController nipbController(&nibpGenerator);
+    engine.rootContext()->setContextProperty("nibpController", &nipbController);
+
     const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml")); // telling the QML engine to load the main qml file
     engine.load(url);
-
-
-
-
-    // --- TEMPORARY SCENARIO TEST ---
-    qDebug() << "=== SCENARIO LOAD TEST ===";
-    qDebug() << "Name:" << scenario.name;
-    qDebug() << "ECG File:" << scenario.ecgFile;
-    qDebug() << "Target SpO2:" << scenario.spo2;
-    qDebug() << "Target RR:" << scenario.respiratoryRate;
-    qDebug() << "Target Systolic:" << scenario.nibpSystolic;
-    qDebug() << "==========================";
-    // -------------------------------
-
-
-    
 
     int exitCode = app.exec();
 

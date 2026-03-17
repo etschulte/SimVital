@@ -260,8 +260,9 @@ Window {
                 NibpBox {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    valueText: "--"
-                    lastMeasureTime: "--"
+                    valueText: nibpController ? nibpController.readingVal : "--"
+                    lastMeasureTime: nibpController ? nibpController.timeVal : "--"
+                    onMeasureClicked: nibpController.startMeasurement()
                 }
 
                 ReadingsBox {
