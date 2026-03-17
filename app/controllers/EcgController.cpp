@@ -17,6 +17,7 @@ EcgController::EcgController(MitBihParser* parser, RingBuffer* buffer, QObject* 
 
     timerPtr = new QTimer(this);
     connect(timerPtr, &QTimer::timeout, this, &EcgController::onTick); // registering timer callback 
+    timerPtr->start(1000 / sampleRate);
 
 }
 
@@ -32,20 +33,6 @@ int EcgController::getEcgVal() const {
 // gets HR value
 int EcgController::getHRVal() const {
     return m_currentBpm;
-}
-
-// starts the timer
-void EcgController::start() {
-    if (!timerPtr->isActive()) {
-        timerPtr->start(1000 / sampleRate);
-    }
-}
-
-// stops the timer
-void EcgController::stop() {
-    if (timerPtr->isActive()) {
-        timerPtr->stop();
-    }
 }
 
 // emits when ECG value changes

@@ -38,10 +38,6 @@ public:
     // getter class for heart rate value
     int getHRVal() const;
 
-    // functions that allow us to use buttons in UI to start and stop timer
-    Q_INVOKABLE void start();
-    Q_INVOKABLE void stop();
-
 signals:
     // Signals that the ECG value has changed
     void ecgValChanged(int ecgVal);

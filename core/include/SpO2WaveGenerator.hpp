@@ -9,6 +9,7 @@ class SpO2WaveGenerator : public QObject {
 private:
     QTimer* timerPtr;
     double timeStep;
+    int currentHr;
 
 public:
     SpO2WaveGenerator(QObject* parent = nullptr);
@@ -18,4 +19,7 @@ signals:
 
 private slots:
     void calcNextStep();
+
+public slots:
+    void setHeartRate(int hr);
 };

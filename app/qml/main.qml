@@ -37,8 +37,8 @@ Window {
         function onWaveValChanged(spO2Val) {
             spo2History.push(spO2Val)
 
-            if (ecgHistory.length > maxPoints) {
-                ecgHistory.shift()
+            if (spo2History.length > maxPoints) {
+                spo2History.shift()
             }
 
             spo2Canvas.requestPaint()
@@ -297,28 +297,6 @@ Window {
                     valueText: "--"
                     valueColor: "#ffff00"
                 }
-            }
-
-            ColumnLayout {
-                Layout.preferredWidth: 80
-                Layout.fillHeight: true
-                spacing: 10
-
-                Button {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 60
-                    text: "Start"
-                    onClicked: ecgController.start()
-                }
-
-                Button {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 60
-                    text: "Stop"
-                    onClicked: ecgController.stop()
-                }
-
-                Item { Layout.fillHeight: true }
             }
         }
     }

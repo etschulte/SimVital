@@ -4,7 +4,8 @@
 
 SpO2WaveGenerator::SpO2WaveGenerator(QObject* parent) 
     : QObject(parent), 
-    timeStep(0.0) 
+    timeStep(0.0),
+    currentHr(60) 
     {
     timerPtr = new QTimer(this);
     connect(timerPtr, &QTimer::timeout, this, &SpO2WaveGenerator::calcNextStep);
@@ -12,8 +13,13 @@ SpO2WaveGenerator::SpO2WaveGenerator(QObject* parent)
 }
 
 void SpO2WaveGenerator::calcNextStep() {
-    timeStep += 0.01;
+    double increment = 6.28 * (currentHr / 60.0) * 0.016;
+    timeStep += increment;
 
     double wave = std::sin(timeStep);
     emit valChanged(wave);
+}
+
+void SpO2WaveGenerator::setHeartRate(int hr) {
+    currentHr = hr;
 }

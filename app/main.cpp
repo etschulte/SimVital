@@ -4,6 +4,7 @@
 #include <thread>
 #include <chrono>
 #include <QDebug>
+#include <QObject>
 
 #include "../core/include/MitBihParser.hpp"
 #include "../core/include/RingBuffer.hpp"
@@ -65,6 +66,8 @@ int main(int argc, char *argv[]) {
 
     EcgController ecgController(&parser, &buffer);
     engine.rootContext()->setContextProperty("ecgController", &ecgController); // put ecgController into global context so that QML files can see it
+
+    QObject::connect(&ecgController, &EcgController::hrValChanged, &spo2WaveGenerator, &SpO2WaveGenerator::setHeartRate);
 
     SpO2Controller spo2Controller(&spo2Generator);
     engine.rootContext()->setContextProperty("spo2Controller", &spo2Controller);
