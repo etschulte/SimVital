@@ -33,6 +33,7 @@ qt_add_qml_module(SimVitalApp
     QML_FILES
         qml/main.qml
         qml/ReadingsBox.qml
+        qml/NibpBox.qml
 )
 
 # Gives access to SimVitalCore's headers

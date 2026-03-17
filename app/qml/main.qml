@@ -239,20 +239,6 @@ Window {
                             ctx.stroke();
                         }
                     }
-
-                    // Rectangle {
-                    //     Layout.fillWidth: true
-                    //     Layout.fillHeight: true
-                    //     color: "#2a2a2a"
-                    //     radius: 8
-
-                    //     Text {
-                    //         text: "SpO2 Waveform Placeholder"
-                    //         color: "#555555"
-                    //         font.pixelSize: 18
-                    //         anchors.centerIn: parent
-                    //     }
-                    // }
                 }
 
             GridLayout {
@@ -265,19 +251,17 @@ Window {
                 ReadingsBox {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    titleText: "NIBP"
-                    unitText: "mmHg"
-                    valueText: "--"
-                    valueColor: "#ffffff"
-                }
-
-                ReadingsBox {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
                     titleText: "HR"
                     unitText: "bpm"
                     valueText: ecgController ? ecgController.hrVal : "--"
                     valueColor: "#00ff00"
+                }
+
+                NibpBox {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    valueText: "--"
+                    lastMeasureTime: "--"
                 }
 
                 ReadingsBox {
