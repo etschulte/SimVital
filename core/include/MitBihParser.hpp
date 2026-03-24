@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <cstdint>
+#include <QString>
 
 class MitBihParser {
 private:
@@ -15,7 +16,7 @@ public:
     MitBihParser();
     ~MitBihParser();
 
-    bool loadFile(const std::string& filePath);
+    bool loadFile(const QString &filePath);
 
     bool getNextVal(int& value);
 

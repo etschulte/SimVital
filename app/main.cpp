@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     ScenarioManager manager;
 
     PatientScenario scenario = manager.loadScenario("data/normal.json");
-    std::string testFile = "data/100.dat";
+    QString testFile = scenario.ecgFile;
 
     SpO2Generator spo2Generator(scenario.spo2);
     SpO2WaveGenerator spo2WaveGenerator;

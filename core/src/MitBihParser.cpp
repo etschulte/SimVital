@@ -7,7 +7,7 @@ MitBihParser::MitBihParser() : secondSamplePending(false), pendingSampleVal(0) {
 //Nothing to cleanup so deconstructor can be empty
 MitBihParser::~MitBihParser(){}
 
-bool MitBihParser::loadFile(const std::string &filePath) {
+bool MitBihParser::loadFile(const QString &filePath) {
 
     //close file if one is already open
     if (fileStream.is_open()) {
@@ -19,7 +19,7 @@ bool MitBihParser::loadFile(const std::string &filePath) {
     pendingSampleVal = 0;
 
     //open file
-    fileStream.open(filePath, std::ios::binary);
+    fileStream.open(filePath.toStdString(), std::ios::binary);
 
     return fileStream.is_open();
 }
