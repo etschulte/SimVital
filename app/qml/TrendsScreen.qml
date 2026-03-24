@@ -1,6 +1,6 @@
 import QtQuick
 
 Text {
-    text: "Instructor Control Panel"
+    text: "Trends Screen"
     color: "#FFFFFF"
 }

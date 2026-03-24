@@ -1,6 +1,6 @@
 import QtQuick
 
 Text {
-    text: "Instructor Control Panel"
+    text: "Logout Screen"
     color: "#FFFFFF"
 }

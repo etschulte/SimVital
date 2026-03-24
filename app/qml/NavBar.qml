@@ -6,6 +6,12 @@ Rectangle {
     color: "#2a2a2a"
     radius: 8
 
+    signal monitorScreenRequested()
+    signal controlPanelRequested()
+    signal trendsScreenRequested()
+    signal patientScreenRequested()
+    signal logoutScreenRequested()
+
     Column {
         anchors.centerIn: parent
         spacing: 15
@@ -13,16 +19,19 @@ Rectangle {
         NavButton {
             titleText: "Monitor"
             iconSource: ""
+            onClicked: monitorScreenRequested()
         }
 
         NavButton {
             titleText: "Trends"
             iconSource: ""
+            onClicked: trendsScreenRequested()
         } 
 
         NavButton {
             titleText: "Patient"
             iconSource: ""
+            onClicked: patientScreenRequested()
         } 
 
         NavButton {
@@ -33,11 +42,13 @@ Rectangle {
         NavButton {
             titleText: "Control Panel"
             iconSource: ""
+            onClicked: controlPanelRequested()
         } 
 
         NavButton {
             titleText: "Logout"
             iconSource: ""
+            onClicked: logoutScreenRequested()
         } 
     }
 }
