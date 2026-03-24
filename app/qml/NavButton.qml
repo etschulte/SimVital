@@ -23,7 +23,7 @@ Rectangle {
     // --- Visual Layout ---
     Column {
         anchors.centerIn: parent
-        spacing: 4 
+        spacing: 15 
 
         Image {
             source: root.iconSource

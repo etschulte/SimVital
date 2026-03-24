@@ -19,7 +19,11 @@ Window {
         }
 
         NavBar {
-
+            Layout.preferredWidth: 80
+            Layout.fillHeight: true
+            Layout.topMargin: 60
+            Layout.bottomMargin: 15
+            Layout.rightMargin: 15
         }
     }    
 }

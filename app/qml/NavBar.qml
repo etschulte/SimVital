@@ -4,11 +4,11 @@ import QtQuick.Layouts
 Rectangle {
     width: 80
     color: "#2a2a2a"
+    radius: 8
 
     Column {
-        anchors.fill: parent
-        anchors.margins: 15
-        spacing: 30
+        anchors.centerIn: parent
+        spacing: 15
 
         NavButton {
             titleText: "Monitor"
