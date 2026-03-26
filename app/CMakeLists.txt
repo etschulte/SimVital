@@ -44,6 +44,7 @@ qt_add_qml_module(SimVitalApp
         qml/LogoutScreen.qml
         qml/TrendsScreen.qml
         qml/PatientScreen.qml
+        qml/ScenarioButton.qml
 )
 
 # Gives access to SimVitalCore's headers

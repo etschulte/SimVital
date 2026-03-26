@@ -3,8 +3,8 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Window {
-    width: 800
-    height: 480
+    width: 1600
+    height: 960
     visible: true
     title: "SimVital - Patient Monitor"
     color: "#1e1e1e"

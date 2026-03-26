@@ -9,7 +9,6 @@ Rectangle {
     property url iconSource: ""
     property color textColor: "#a0a0a0" 
 
-    // --- Custom Signal ---
     signal clicked()
 
     // --- Interaction ---
