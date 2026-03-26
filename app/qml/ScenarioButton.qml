@@ -7,7 +7,7 @@ Rectangle {
     property color textColor: "#a0a0a0" 
     property bool isActive: false
 
-    width: 360
+    width: 530
     height: 70
     radius: 8
     color: isActive ? "#3E8937" : "#4D4C4C"

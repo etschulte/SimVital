@@ -33,7 +33,7 @@ Rectangle {
     }
 
     Rectangle {
-        width: 390
+        width: 560
         height: 500
         anchors.centerIn: parent
         color: "#2a2a2a"
