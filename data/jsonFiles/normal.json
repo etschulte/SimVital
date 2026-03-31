@@ -1,5 +1,5 @@
 {
-  "name": "Normal Adult Resting",
+  "name": "Normal Sinus Rhythm",
   "ecgFile": "data/datFiles/100.dat",
   "startingIndex": 0,
   "Spo2": 98,

@@ -6,8 +6,6 @@ Rectangle {
     id: panelRoot
     color: "#1e1e1e"
 
-    property string currentScenario: "Normal Sinus Rhythm"
-
     Text {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -53,9 +51,8 @@ Rectangle {
 
             ScenarioButton {
                 scenarioName: "Normal Sinus Rhythm"
-                isActive: panelRoot.currentScenario === scenarioName
+                isActive: simEngine ? simEngine.currentScenario === scenarioName : false
                 onClicked: {
-                    panelRoot.currentScenario = scenarioName
                     simEngine.switchScenario("data/jsonFiles/normal.json")
                     console.log("switched to normal")
                 }
@@ -64,9 +61,8 @@ Rectangle {
 
             ScenarioButton {
                 scenarioName: "Ventricular Tachycardia"
-                isActive: panelRoot.currentScenario === scenarioName
+                isActive: simEngine ? simEngine.currentScenario === scenarioName : false
                 onClicked: {
-                    panelRoot.currentScenario = scenarioName
                     simEngine.switchScenario("data/jsonFiles/vtach.json")
                     console.log("switched to vtach")
                 }
@@ -75,9 +71,8 @@ Rectangle {
 
             ScenarioButton {
                 scenarioName: "Atrial Fibrillation"
-                isActive: panelRoot.currentScenario === scenarioName
+                isActive: simEngine ? simEngine.currentScenario === scenarioName : false
                 onClicked: {
-                    panelRoot.currentScenario = scenarioName
                     simEngine.switchScenario("data/jsonFiles/afib.json")
                     console.log("switched to afib")
                 }
@@ -86,9 +81,8 @@ Rectangle {
 
             ScenarioButton {
                 scenarioName: "Ventricular Bigeminy"
-                isActive: panelRoot.currentScenario === scenarioName
+                isActive: simEngine ? simEngine.currentScenario === scenarioName : false
                 onClicked: {
-                    panelRoot.currentScenario = scenarioName
                     simEngine.switchScenario("data/jsonFiles/bigeminy.json")
                     console.log("switched to bigeminy")
                 }
@@ -97,9 +91,8 @@ Rectangle {
 
             ScenarioButton {
                 scenarioName: "Ventricular Fibrillation"
-                isActive: panelRoot.currentScenario === scenarioName
+                isActive: simEngine ? simEngine.currentScenario === scenarioName : false
                 onClicked: {
-                    panelRoot.currentScenario = scenarioName
                     simEngine.switchScenario("data/jsonFiles/vfib.json")
                     console.log("switched to vfib")
                 }

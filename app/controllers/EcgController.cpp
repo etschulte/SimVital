@@ -38,8 +38,6 @@ void EcgController::onTick() {
     if (bufferPtr->read(nextVal)) {
         int slope = nextVal - recentEcgVal;
 
-        if (recentEcgVal > 800) qDebug() << "Val:" << recentEcgVal << "Slope:" << slope;
-
         recentEcgVal = nextVal;
         emit ecgValChanged(recentEcgVal);
 

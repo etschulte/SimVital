@@ -13,6 +13,7 @@
 
 class SimulationEngine : public QObject {
     Q_OBJECT
+    Q_PROPERTY(QString currentScenario READ currentScenario NOTIFY currentScenarioChanged)
 
 private:
     ScenarioManager manager;
@@ -22,12 +23,15 @@ private:
     RrGenerator rrGen;
     SpO2Generator spo2Gen;
     SpO2WaveGenerator spo2WaveGen;
+    QString m_currentScenario;
     std::thread thread;
     std::atomic<bool> flag;
 
 public:
     explicit SimulationEngine(QObject* parent = nullptr);
     virtual ~SimulationEngine();
+
+    QString currentScenario() const { return m_currentScenario; }
 
     void fillBuffer();
 
@@ -46,4 +50,7 @@ public:
     SpO2WaveGenerator* getSpO2WaveGen();
 
     ScenarioManager* getScenarioManager();
+
+signals:
+    void currentScenarioChanged();
 };

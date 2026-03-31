@@ -48,6 +48,9 @@ void SimulationEngine::switchScenario(QString scenarioFile) {
 
     PatientScenario scenario = manager.loadScenario(scenarioFile);
 
+    m_currentScenario = scenario.name;
+    emit currentScenarioChanged();
+
     parser.loadFile(scenario.ecgFile, scenario.startingIndex);
     spo2Gen.setTargetVal(scenario.spo2);
     rrGen.setTargetVal(scenario.respiratoryRate);
