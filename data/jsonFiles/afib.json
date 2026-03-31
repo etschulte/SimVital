@@ -1,0 +1,14 @@
+{
+  "name": "Atrial Fibrillation",
+  "ecgFile": "data/datFiles/201.dat",
+  "Spo2": 95,
+  "Spo2UpperAlarm": 100,
+  "Spo2LowerAlarm": 90,
+  "RespiratoryRate": 20,
+  "RRUpperAlarm": 25,
+  "RRLowerAlarm": 10,
+  "NIBPSystolic": 110,
+  "NIBPDiastolic": 75,
+  "NIBPUpperAlarm": 160,
+  "NIBPLowerAlarm": 90
+}

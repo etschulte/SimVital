@@ -1,14 +1,14 @@
 {
-  "name": "Normal Adult Resting",
-  "ecgFile": "data/100.dat",
-  "Spo2": 98,
+  "name": "Ventricular Bigeminy",
+  "ecgFile": "data/datFiles/200.dat",
+  "Spo2": 97,
   "Spo2UpperAlarm": 100,
   "Spo2LowerAlarm": 90,
   "RespiratoryRate": 16,
   "RRUpperAlarm": 25,
   "RRLowerAlarm": 10,
-  "NIBPSystolic": 120,
-  "NIBPDiastolic": 80,
+  "NIBPSystolic": 115,
+  "NIBPDiastolic": 75,
   "NIBPUpperAlarm": 160,
   "NIBPLowerAlarm": 90
 }

@@ -1,6 +1,6 @@
 {
   "name": "Ventricular Tachycardia",
-  "ecgFile": "data/205.dat",
+  "ecgFile": "data/datFiles/205.dat",
   "Spo2": 88,
   "Spo2UpperAlarm": 100,
   "Spo2LowerAlarm": 90,

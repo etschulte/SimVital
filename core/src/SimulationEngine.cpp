@@ -12,7 +12,7 @@ SimulationEngine::SimulationEngine(QObject* parent)
     thread(),
     flag(false)
 {
-    switchScenario("data/normal.json");
+    switchScenario("data/jsonFiles/normal.json");
 }
 
 SimulationEngine::~SimulationEngine() {

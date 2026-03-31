@@ -56,7 +56,7 @@ Rectangle {
                 isActive: panelRoot.currentScenario === scenarioName
                 onClicked: {
                     panelRoot.currentScenario = scenarioName
-                    simEngine.switchScenario("data/normal.json")
+                    simEngine.switchScenario("data/jsonFiles/normal.json")
                     console.log("switched to normal")
                 }
                 textColor: "#a0a0a0"
@@ -67,16 +67,42 @@ Rectangle {
                 isActive: panelRoot.currentScenario === scenarioName
                 onClicked: {
                     panelRoot.currentScenario = scenarioName
-                    simEngine.switchScenario("data/vtach.json")
+                    simEngine.switchScenario("data/jsonFiles/vtach.json")
                     console.log("switched to vtach")
                 }
                 textColor: "#a0a0a0"
             }
 
             ScenarioButton {
-                scenarioName: "Scenario 3"
+                scenarioName: "Atrial Fibrillation"
                 isActive: panelRoot.currentScenario === scenarioName
-                onClicked: panelRoot.currentScenario = scenarioName
+                onClicked: {
+                    panelRoot.currentScenario = scenarioName
+                    simEngine.switchScenario("data/jsonFiles/afib.json")
+                    console.log("switched to afib")
+                }
+                textColor: "#a0a0a0"
+            }
+
+            ScenarioButton {
+                scenarioName: "Ventricular Bigeminy"
+                isActive: panelRoot.currentScenario === scenarioName
+                onClicked: {
+                    panelRoot.currentScenario = scenarioName
+                    simEngine.switchScenario("data/jsonFiles/bigeminy.json")
+                    console.log("switched to bigeminy")
+                }
+                textColor: "#a0a0a0"
+            }
+
+            ScenarioButton {
+                scenarioName: "Ventricular Fibrillation"
+                isActive: panelRoot.currentScenario === scenarioName
+                onClicked: {
+                    panelRoot.currentScenario = scenarioName
+                    simEngine.switchScenario("data/jsonFiles/vfib.json")
+                    console.log("switched to vfib")
+                }
                 textColor: "#a0a0a0"
             }
         }
