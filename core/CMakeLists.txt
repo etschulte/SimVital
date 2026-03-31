@@ -10,6 +10,7 @@ add_library(SimVitalCore STATIC
     src/SpO2WaveGenerator.cpp
     src/RrGenerator.cpp
     src/NibpGenerator.cpp
+    src/SimulationEngine.cpp
 )
 
 # Tells any app using this library to look in include folder for headers
