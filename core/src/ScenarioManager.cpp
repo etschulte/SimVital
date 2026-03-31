@@ -26,6 +26,7 @@ PatientScenario ScenarioManager::loadScenario(const QString& jsonFile) const {
 
     scenario.name = jsonObj["name"].toString();
     scenario.ecgFile = jsonObj["ecgFile"].toString();
+    scenario.startingIndex = jsonObj["startingIndex"].toInt();
     scenario.spo2 = jsonObj["Spo2"].toInt();
     scenario.spo2UpperAlarm = jsonObj["Spo2UpperAlarm"].toInt();
     scenario.spo2LowerAlarm = jsonObj["Spo2LowerAlarm"].toInt();

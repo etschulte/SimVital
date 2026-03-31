@@ -266,7 +266,7 @@ Item {
                     Layout.fillHeight: true
                     titleText: "SpO2"
                     unitText: "%"
-                    valueText: spo2Controller ? spo2Controller.spO2Val : "--"
+                    valueText: spo2Controller ? (spo2Controller.spO2Val === -1 ? "---" : spo2Controller.spO2Val) : "--"
                     valueColor: "#00bfff"
                 }
 

@@ -48,7 +48,7 @@ void SimulationEngine::switchScenario(QString scenarioFile) {
 
     PatientScenario scenario = manager.loadScenario(scenarioFile);
 
-    parser.loadFile(scenario.ecgFile);
+    parser.loadFile(scenario.ecgFile, scenario.startingIndex);
     spo2Gen.setTargetVal(scenario.spo2);
     rrGen.setTargetVal(scenario.respiratoryRate);
     nibpGen.setSystolicVal(scenario.nibpSystolic);

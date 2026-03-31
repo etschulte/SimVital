@@ -15,10 +15,14 @@ SpO2WaveGenerator::SpO2WaveGenerator(QObject* parent)
 SpO2WaveGenerator::~SpO2WaveGenerator() {}
 
 void SpO2WaveGenerator::calcNextStep() {
-    double increment = 6.28 * (currentHr / 60.0) * 0.016;
-    timeStep += increment;
+    double wave = 0.0;
 
-    double wave = std::sin(timeStep);
+    if (currentHr > 0) {
+        double increment = 6.28 * (currentHr / 60.0) * 0.016;
+        timeStep += increment;
+        wave = std::sin(timeStep);
+    }
+    
     emit valChanged(wave);
 }
 

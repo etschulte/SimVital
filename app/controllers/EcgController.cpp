@@ -22,52 +22,55 @@ EcgController::EcgController(MitBihParser* parser, RingBuffer* buffer, QObject* 
 }
 
 
-// nothing to deconstruct
 EcgController::~EcgController() {}
 
-// gets ECG value
 int EcgController::getEcgVal() const {
     return recentEcgVal;
 }
 
-// gets HR value
 int EcgController::getHRVal() const {
     return m_currentBpm;
 }
 
-// emits when ECG value changes
 void EcgController::onTick() {
     int nextVal = 0;
 
-    // check if we can read from the buffer
     if (bufferPtr->read(nextVal)) {
+        int slope = nextVal - recentEcgVal;
+
+        if (recentEcgVal > 800) qDebug() << "Val:" << recentEcgVal << "Slope:" << slope;
+
         recentEcgVal = nextVal;
-        emit ecgValChanged(recentEcgVal); // tells QML to update
+        emit ecgValChanged(recentEcgVal);
 
-        samplesSinceLastBeat++; // advances the clock
+        samplesSinceLastBeat++;
 
-        // if the cooldown timer is active, decrement it 
         if (refractoryCounter > 0) {
             refractoryCounter--;
         }
 
-        // if cooldown timer is awake, current ECG value is above threshold, and previous ECG was below, then emit bpm and reset clock and cooldown
-        if (refractoryCounter == 0 && recentEcgVal > threshold && wasAboveThreshold == false) {
+        if (samplesSinceLastBeat > (sampleRate * 2.5)) {
+            if (m_currentBpm != 0) {
+                m_currentBpm = 0;
+                emit hrValChanged(m_currentBpm);
+            }
+        }
 
-            // skips first peak
+        int slopeThreshold = 50;
+
+        if (refractoryCounter == 0 && recentEcgVal > threshold && slope > slopeThreshold && wasAboveThreshold == false) {
+            
             if (seenFirstPeak == false) {
                 seenFirstPeak = true;
             } else {
                 m_currentBpm = (60 * sampleRate) / samplesSinceLastBeat;
                 emit hrValChanged(m_currentBpm);
             }
-            
-            // reset clock and cooldown timer
+
             samplesSinceLastBeat = 0;
             refractoryCounter = refractoryPeriod;
         }
 
-        // sets that the previous value was above the threshold
         wasAboveThreshold = (recentEcgVal > threshold);
     }
 }

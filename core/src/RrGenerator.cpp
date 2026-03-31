@@ -47,5 +47,9 @@ void RrGenerator::createNoise() {
         currentVal++;
     }
 
+    if (currentVal < 0) {
+        currentVal = 0;
+    }
+
     emit rrValChanged(currentVal);
 }

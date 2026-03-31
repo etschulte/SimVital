@@ -6,7 +6,8 @@
 SpO2Generator::SpO2Generator(QObject* parent) 
     : QObject(parent),
     targetVal(98),
-    currentVal(98)
+    currentVal(98),
+    currentHr(60)
     {
 
     timerPtr = new QTimer(this);
@@ -17,7 +18,8 @@ SpO2Generator::SpO2Generator(QObject* parent)
 SpO2Generator::SpO2Generator(int targetVal, QObject* parent) 
     : QObject(parent),
     targetVal(targetVal),
-    currentVal(targetVal) 
+    currentVal(targetVal),
+    currentHr(60)
     {
 
     timerPtr = new QTimer(this);
@@ -29,6 +31,10 @@ SpO2Generator::~SpO2Generator() {}
 
 void SpO2Generator::setTargetVal(int newTargetVal) {
     targetVal = newTargetVal;
+}
+
+void SpO2Generator::setHeartRate(int hr) {
+    currentHr = hr;
 }
 
 void SpO2Generator::createNoise() {
@@ -53,7 +59,10 @@ void SpO2Generator::createNoise() {
         currentVal = 100;
     }
 
-    emit spO2ValChanged(currentVal);
-
+    if (currentHr <= 0) {
+        emit spO2ValChanged(-1);
+    } else {
+        emit spO2ValChanged(currentVal);
+    }
 }
 

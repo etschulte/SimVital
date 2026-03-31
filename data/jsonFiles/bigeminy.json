@@ -1,6 +1,7 @@
 {
   "name": "Ventricular Bigeminy",
   "ecgFile": "data/datFiles/200.dat",
+  "startingIndex": 0,
   "Spo2": 97,
   "Spo2UpperAlarm": 100,
   "Spo2LowerAlarm": 90,

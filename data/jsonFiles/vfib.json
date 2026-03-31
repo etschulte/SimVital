@@ -1,6 +1,7 @@
 {
   "name": "Ventricular Fibrillation",
   "ecgFile": "data/datFiles/207.dat",
+  "startingIndex": 150000,
   "Spo2": 70,
   "Spo2UpperAlarm": 100,
   "Spo2LowerAlarm": 90,

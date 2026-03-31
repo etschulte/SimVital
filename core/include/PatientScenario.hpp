@@ -6,6 +6,7 @@ struct PatientScenario
 {
     QString name;
     QString ecgFile;
+    int startingIndex;
     int spo2;
     int spo2UpperAlarm;
     int spo2LowerAlarm;

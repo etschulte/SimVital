@@ -6,7 +6,7 @@ Rectangle {
     id: panelRoot
     color: "#1e1e1e"
 
-    property string currentScenario: "Scenario 1"
+    property string currentScenario: "Normal Sinus Rhythm"
 
     Text {
         anchors.top: parent.top

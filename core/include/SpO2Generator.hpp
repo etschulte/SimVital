@@ -9,6 +9,7 @@ class SpO2Generator : public QObject {
 private: 
     int targetVal;
     int currentVal;
+    int currentHr;
     QTimer* timerPtr;
 
 public:
@@ -17,6 +18,8 @@ public:
     ~SpO2Generator();
 
     void setTargetVal(int newTargetVal);
+
+    void setHeartRate(int hr);
 
 signals:
     void spO2ValChanged(int newVal);

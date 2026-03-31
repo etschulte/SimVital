@@ -16,7 +16,7 @@ public:
     MitBihParser();
     ~MitBihParser();
 
-    bool loadFile(const QString &filePath);
+    bool loadFile(const QString &filePath, int startIndex);
 
     bool getNextVal(int& value);
 
