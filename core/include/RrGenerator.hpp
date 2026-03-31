@@ -12,7 +12,12 @@ private:
     QTimer* timerPtr;
 
 public:
+    explicit RrGenerator(QObject* parent = nullptr);
+    virtual ~RrGenerator();
+
     RrGenerator(int targetVal, QObject* parent = nullptr);
+
+    void setTargetVal(int newTargetVal);
 
 signals:
     void rrValChanged(int newVal);

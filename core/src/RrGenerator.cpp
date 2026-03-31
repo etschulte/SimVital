@@ -2,6 +2,17 @@
 
 #include <QRandomGenerator>
 
+RrGenerator::RrGenerator(QObject* parent)
+    : QObject(parent),
+    targetVal(16),
+    currentVal(16) 
+    {
+
+    timerPtr = new QTimer(this);
+    connect(timerPtr, &QTimer::timeout, this, &RrGenerator::createNoise);
+    timerPtr->start(1000);
+}
+
 RrGenerator::RrGenerator(int targetVal, QObject* parent)
     : QObject(parent),
     targetVal(targetVal),
@@ -10,6 +21,12 @@ RrGenerator::RrGenerator(int targetVal, QObject* parent)
     timerPtr = new QTimer(this);
     connect(timerPtr, &QTimer::timeout, this, &RrGenerator::createNoise);
     timerPtr->start(1000);
+}
+
+RrGenerator::~RrGenerator() {}
+
+void RrGenerator::setTargetVal(int newTargetVal) {
+    targetVal = newTargetVal;
 }
 
 void RrGenerator::createNoise() {

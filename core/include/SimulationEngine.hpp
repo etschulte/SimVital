@@ -15,18 +15,19 @@ class SimulationEngine : public QObject {
     Q_OBJECT
 
 private:
+    ScenarioManager manager;
     MitBihParser parser;
     RingBuffer buffer;
     NibpGenerator nibpGen;
     RrGenerator rrGen;
     SpO2Generator spo2Gen;
     SpO2WaveGenerator spo2WaveGen;
-    ScenarioManager manager;
     std::thread thread;
     std::atomic<bool> flag;
 
 public:
-    SimulationEngine();
+    explicit SimulationEngine(QObject* parent = nullptr);
+    virtual ~SimulationEngine();
 
     void fillBuffer();
 

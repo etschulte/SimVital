@@ -1,8 +1,11 @@
 project(SimVitalCore)
 
-# Create the library
-add_library(SimVitalCore STATIC
-    src/PatientData.cpp
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOGEN_VERBOSE ON)
+
+add_library(SimVitalCore STATIC 
     src/SpO2Generator.cpp
     src/MitBihParser.cpp
     src/RingBuffer.cpp
@@ -13,10 +16,12 @@ add_library(SimVitalCore STATIC
     src/SimulationEngine.cpp
 )
 
-# Tells any app using this library to look in include folder for headers
 target_include_directories(SimVitalCore PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${CMAKE_CURRENT_BINARY_DIR}/SimVitalCore_autogen/include
 )
 
-find_package(Qt6 REQUIRED COMPONENTS Core) # Gets desired package
-target_link_libraries(SimVitalCore PRIVATE Qt6::Core) #connects it to SimVitalCore library
+find_package(Qt6 REQUIRED COMPONENTS Core)
+
+target_link_libraries(SimVitalCore PUBLIC Qt6::Core)

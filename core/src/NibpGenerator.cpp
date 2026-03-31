@@ -2,11 +2,24 @@
 
 #include <cstdlib>
 
+NibpGenerator::NibpGenerator()
+    : systolicVal(120),
+    diastolicVal(80) 
+    {
+}
+
 NibpGenerator::NibpGenerator(int systolicVal, int diastolicVal) 
     : systolicVal(systolicVal),
     diastolicVal(diastolicVal)
     {
+}
 
+void NibpGenerator::setSystolicVal(int newSystolic) {
+    systolicVal = newSystolic;
+}
+
+void NibpGenerator::setDiastolicVal(int newDiastolic) {
+    diastolicVal = newDiastolic;
 }
 
 std::pair<int, int> NibpGenerator::generateReading() {
@@ -20,3 +33,4 @@ std::pair<int, int> NibpGenerator::generateReading() {
 
     return std::make_pair(calculatedSystolic, calculatedDiastolic);
 }
+

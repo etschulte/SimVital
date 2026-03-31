@@ -3,6 +3,17 @@
 
 #include <QRandomGenerator>
 
+SpO2Generator::SpO2Generator(QObject* parent) 
+    : QObject(parent),
+    targetVal(98),
+    currentVal(98)
+    {
+
+    timerPtr = new QTimer(this);
+    connect(timerPtr, &QTimer::timeout, this, &SpO2Generator::createNoise);
+    timerPtr->start(1000);
+}
+
 SpO2Generator::SpO2Generator(int targetVal, QObject* parent) 
     : QObject(parent),
     targetVal(targetVal),
@@ -12,7 +23,12 @@ SpO2Generator::SpO2Generator(int targetVal, QObject* parent)
     timerPtr = new QTimer(this);
     connect(timerPtr, &QTimer::timeout, this, &SpO2Generator::createNoise);
     timerPtr->start(1000);
+}
 
+SpO2Generator::~SpO2Generator() {}
+
+void SpO2Generator::setTargetVal(int newTargetVal) {
+    targetVal = newTargetVal;
 }
 
 void SpO2Generator::createNoise() {

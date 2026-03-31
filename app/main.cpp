@@ -19,84 +19,33 @@
 #include "../core/include/RrGenerator.hpp"
 #include "controllers/NibpController.hpp"
 #include "../core/include/NibpGenerator.hpp"
-
-void fillBuffer(MitBihParser* parser, RingBuffer* buffer, std::atomic<bool>& flag) {
-    while(!flag) {
-        int val;
-
-        // break if we run out of file data
-        if (!parser->getNextVal(val)) break;
-
-        // gets rid of a value to get data from only channel 1
-        int dummyVal;
-        if (!parser->getNextVal(dummyVal)) break;
-
-        // keep trying to write the same value until there is space
-        while (!buffer->write(val)) {
-
-            // if the app is closed, exit the loop
-            if (flag) return;
-
-            // buffer is full, sleep for 5ms to let UI read some data
-            std::this_thread::sleep_for(std::chrono::milliseconds(5));
-        }
-    }
-}
+#include "../core/include/SimulationEngine.hpp"
 
 int main(int argc, char *argv[]) {
-    std::atomic<bool> flag = false; // flag for shutdown sequence
-
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
-    
-    MitBihParser parser;
-    RingBuffer buffer(1024);
-    ScenarioManager manager;
 
-    PatientScenario scenario = manager.loadScenario("data/normal.json");
-    QString testFile = scenario.ecgFile;
+    SimulationEngine engineCore;
 
-    SpO2Generator spo2Generator(scenario.spo2);
-    SpO2WaveGenerator spo2WaveGenerator;
+    EcgController ecgController(engineCore.getParser(), engineCore.getBuffer());
+    SpO2Controller spo2Controller(engineCore.getSpO2Gen());
+    SpO2WaveController spo2WaveController(engineCore.getSpO2WaveGen());
+    RrController rrController(engineCore.getRRGen());
+    NibpController nipbController(engineCore.getNibpGen());
 
-    RrGenerator rrGenerator(scenario.respiratoryRate);
-
-    NibpGenerator nibpGenerator(scenario.nibpSystolic, scenario.nibpDiastolic);
-
-    // loading data file
-    if (!parser.loadFile(testFile)) {
-        qDebug() << "Could not find file";
-        return -1;
-    }
-
-    // creates a thread to fill buffer in the background so it does not interupt UI
-    std::thread fillBufferThread(fillBuffer, &parser, &buffer, std::ref(flag));
-
-    EcgController ecgController(&parser, &buffer);
-    engine.rootContext()->setContextProperty("ecgController", &ecgController); // put ecgController into global context so that QML files can see it
-
-    QObject::connect(&ecgController, &EcgController::hrValChanged, &spo2WaveGenerator, &SpO2WaveGenerator::setHeartRate);
-
-    SpO2Controller spo2Controller(&spo2Generator);
+    engine.rootContext()->setContextProperty("ecgController", &ecgController);
     engine.rootContext()->setContextProperty("spo2Controller", &spo2Controller);
-
-    SpO2WaveController spo2WaveController(&spo2WaveGenerator);
     engine.rootContext()->setContextProperty("spo2WaveController", &spo2WaveController);
-
-    RrController rrController(&rrGenerator);
     engine.rootContext()->setContextProperty("rrController", &rrController);
-
-    NibpController nipbController(&nibpGenerator);
     engine.rootContext()->setContextProperty("nibpController", &nipbController);
-
+    engine.rootContext()->setContextProperty("simEngine", &engineCore);
+    
+    QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2WaveGen(), &SpO2WaveGenerator::setHeartRate);
+    
     const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml")); // telling the QML engine to load the main qml file
     engine.load(url);
 
     int exitCode = app.exec();
-
-    // shuts down thread before shutting down the app
-    flag = true;
-    fillBufferThread.join();
 
     return exitCode;
 }

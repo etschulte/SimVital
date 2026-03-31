@@ -12,7 +12,11 @@ private:
     QTimer* timerPtr;
 
 public:
+    SpO2Generator(QObject* parent = nullptr);
     SpO2Generator(int targetVal, QObject* parent = nullptr);
+    ~SpO2Generator();
+
+    void setTargetVal(int newTargetVal);
 
 signals:
     void spO2ValChanged(int newVal);

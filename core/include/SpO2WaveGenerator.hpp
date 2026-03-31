@@ -13,6 +13,7 @@ private:
 
 public:
     SpO2WaveGenerator(QObject* parent = nullptr);
+    ~SpO2WaveGenerator();
 
 signals:
     void valChanged(double newVal);

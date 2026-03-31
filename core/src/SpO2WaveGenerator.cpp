@@ -12,6 +12,8 @@ SpO2WaveGenerator::SpO2WaveGenerator(QObject* parent)
     timerPtr->start(16);
 }
 
+SpO2WaveGenerator::~SpO2WaveGenerator() {}
+
 void SpO2WaveGenerator::calcNextStep() {
     double increment = 6.28 * (currentHr / 60.0) * 0.016;
     timeStep += increment;

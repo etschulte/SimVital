@@ -20,6 +20,8 @@ public:
     // reads data from buffer
     bool read(int &sample);
 
+    bool reset();
+
     // checks if buffer is empty
     bool isEmpty() const;
 

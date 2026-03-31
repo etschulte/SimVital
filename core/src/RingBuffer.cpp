@@ -8,8 +8,7 @@ RingBuffer::RingBuffer(int size){
     currentCounter = 0;
 }
 
-// nothing to deconstruct
-RingBuffer::~RingBuffer(){}
+RingBuffer::~RingBuffer() {}
 
 bool RingBuffer::write(int sample) {
 
@@ -47,6 +46,14 @@ bool RingBuffer::read(int &sample) {
     }
 
     currentCounter--;
+
+    return true;
+}
+
+bool RingBuffer::reset() {
+    writePointer = 0;
+    readPointer = 0;
+    currentCounter = 0;
 
     return true;
 }
