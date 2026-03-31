@@ -1,0 +1,14 @@
+{
+  "name": "Ventricular Tachycardia",
+  "ecgFile": "data/205.dat",
+  "Spo2": 88,
+  "Spo2UpperAlarm": 100,
+  "Spo2LowerAlarm": 90,
+  "RespiratoryRate": 26,
+  "RRUpperAlarm": 25,
+  "RRLowerAlarm": 10,
+  "NIBPSystolic": 85,
+  "NIBPDiastolic": 50,
+  "NIBPUpperAlarm": 160,
+  "NIBPLowerAlarm": 90
+}

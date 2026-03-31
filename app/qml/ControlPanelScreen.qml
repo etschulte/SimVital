@@ -54,14 +54,22 @@ Rectangle {
             ScenarioButton {
                 scenarioName: "Normal Sinus Rhythm"
                 isActive: panelRoot.currentScenario === scenarioName
-                onClicked: panelRoot.currentScenario = scenarioName
+                onClicked: {
+                    panelRoot.currentScenario = scenarioName
+                    simEngine.switchScenario("data/normal.json")
+                    console.log("switched to normal")
+                }
                 textColor: "#a0a0a0"
             }
 
             ScenarioButton {
-                scenarioName: "Scenario 2"
+                scenarioName: "Ventricular Tachycardia"
                 isActive: panelRoot.currentScenario === scenarioName
-                onClicked: panelRoot.currentScenario = scenarioName
+                onClicked: {
+                    panelRoot.currentScenario = scenarioName
+                    simEngine.switchScenario("data/vtach.json")
+                    console.log("switched to vtach")
+                }
                 textColor: "#a0a0a0"
             }
 
