@@ -13,5 +13,6 @@
   "NIBPUpperAlarm": 160,
   "NIBPLowerAlarm": 90,
   "ecgThreshold": 1100,
-  "ecgSlopeThreshold": 20
+  "ecgSlopeThreshold": 20,
+  "description": "A rhythm where every normal beat is followed by a Premature Ventricular Contraction (PVC). It creates a 'paired' look on the ECG (one narrow beat, one wide beat). Often results in a lower effective pulse rate."
 }

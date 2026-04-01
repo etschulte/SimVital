@@ -13,5 +13,6 @@
   "NIBPUpperAlarm": 160,
   "NIBPLowerAlarm": 90,
   "ecgThreshold": 1100,
-  "ecgSlopeThreshold": 50
+  "ecgSlopeThreshold": 50,
+  "description": "Baseline healthy heart rhythm. Characterized by a steady rate (60-100 bpm) with distinct P-waves, sharp QRS complexes, and clear T-waves. Used to verify system accuracy and calibration."
 }
