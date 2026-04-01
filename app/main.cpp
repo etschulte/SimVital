@@ -42,7 +42,8 @@ int main(int argc, char *argv[]) {
     
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2WaveGen(), &SpO2WaveGenerator::setHeartRate);
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2Gen(), &SpO2Generator::setHeartRate);
-    
+    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::setThresholds);
+
     const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml")); // telling the QML engine to load the main qml file
     engine.load(url);
 

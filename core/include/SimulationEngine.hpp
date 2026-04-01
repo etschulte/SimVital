@@ -53,4 +53,6 @@ public:
 
 signals:
     void currentScenarioChanged();
+
+    void scenarioLoaded(int threshold, int slopeThreshold);
 };

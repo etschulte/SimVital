@@ -8,6 +8,7 @@ EcgController::EcgController(MitBihParser* parser, RingBuffer* buffer, QObject* 
     timerPtr(nullptr), 
     recentEcgVal(0),
     threshold(1100),
+    slopeThreshold(50),
     wasAboveThreshold(false),
     samplesSinceLastBeat(0),
     refractoryCounter(0),
@@ -32,6 +33,14 @@ int EcgController::getHRVal() const {
     return m_currentBpm;
 }
 
+void EcgController::setThresholds(int newThreshold, int newSlopeThreshold) {
+    threshold = newThreshold;
+    slopeThreshold = newSlopeThreshold;
+    wasAboveThreshold = false;
+    seenFirstPeak = false;
+    samplesSinceLastBeat = 0;
+}
+
 void EcgController::onTick() {
     int nextVal = 0;
 
@@ -54,8 +63,6 @@ void EcgController::onTick() {
             }
         }
 
-        int slopeThreshold = 50;
-
         if (refractoryCounter == 0 && recentEcgVal > threshold && slope > slopeThreshold && wasAboveThreshold == false) {
             
             if (seenFirstPeak == false) {
@@ -67,8 +74,9 @@ void EcgController::onTick() {
 
             samplesSinceLastBeat = 0;
             refractoryCounter = refractoryPeriod;
-        }
+        }   
 
         wasAboveThreshold = (recentEcgVal > threshold);
     }
+    
 }

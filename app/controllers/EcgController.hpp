@@ -18,6 +18,7 @@ private:
     int recentEcgVal; // Most recent ECG value
 
     int threshold; // threshold data must cross
+    int slopeThreshold;
     bool wasAboveThreshold; // checks if current value is above threshold
     int samplesSinceLastBeat; // increments for each data point
     int refractoryCounter; // cooldown timer
@@ -37,6 +38,8 @@ public:
 
     // getter class for heart rate value
     int getHRVal() const;
+
+    void setThresholds(int threshold, int slopeThreshold);
 
 signals:
     // Signals that the ECG value has changed

@@ -50,6 +50,7 @@ void SimulationEngine::switchScenario(QString scenarioFile) {
 
     m_currentScenario = scenario.name;
     emit currentScenarioChanged();
+    emit scenarioLoaded(scenario.ecgThreshold, scenario.ecgSlopeThreshold);
 
     parser.loadFile(scenario.ecgFile, scenario.startingIndex);
     spo2Gen.setTargetVal(scenario.spo2);

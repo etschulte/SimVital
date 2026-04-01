@@ -17,4 +17,6 @@ struct PatientScenario
     int nibpDiastolic;
     int nibpUpperAlarm;
     int nibpLowerAlarm;
+    int ecgThreshold;
+    int ecgSlopeThreshold;
 };
