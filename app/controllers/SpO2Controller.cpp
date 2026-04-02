@@ -3,21 +3,46 @@
 SpO2Controller::SpO2Controller(SpO2Generator* generator, QObject* parent) 
     : QObject(parent),
     generatorPtr(generator),
-    latestSpO2Val(0) 
+    latestSpO2Val(0),
+    lowerLimit(0),
+    isAlarming(false),
+    isSilenced(true)
     {
     connect(generatorPtr, &SpO2Generator::spO2ValChanged, this, &SpO2Controller::updateSpO2Val);
 }
-
 
 int SpO2Controller::getSpO2Val() const {
     return latestSpO2Val;
 }
 
-void SpO2Controller::updateSpO2Val(int spO2Val) {
-    latestSpO2Val = spO2Val;
-    
-    emit spO2ValChanged();
+bool SpO2Controller::getIsAlarming() const {
+    return isAlarming;
 }
 
+void SpO2Controller::setLowerLimit(int newLowerLimit) {
+    lowerLimit = newLowerLimit;
+}
 
+void SpO2Controller::updateAlarm(bool alarmStatus) {
 
+    if (isAlarming != alarmStatus) {
+        isAlarming = alarmStatus;
+
+        if (isAlarming == true) {
+            isSilenced = false;
+        }
+
+        emit alarmStateChanged();
+    }
+
+}
+
+void SpO2Controller::updateSpO2Val(int spO2Val) {
+    latestSpO2Val = spO2Val;
+
+    bool shouldBeAlarming = (latestSpO2Val <= lowerLimit);
+
+    updateAlarm(shouldBeAlarming);
+
+    emit spO2ValChanged();
+}
