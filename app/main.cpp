@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &spo2Controller, &SpO2Controller::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &rrController, &RrController::loadLimits);
+    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::loadLimits);
 
 
     const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml")); // telling the QML engine to load the main qml file

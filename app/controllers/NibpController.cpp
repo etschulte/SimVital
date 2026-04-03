@@ -8,7 +8,11 @@ NibpController::NibpController(NibpGenerator* generator, QObject* parent)
     : QObject(parent),
     nibpGeneratorPtr(generator),
     currentNibpReading("--"),
-    currentTime("--")
+    currentTime("--"),
+    upperLimit(0),
+    lowerLimit(0),
+    isAlarming(false),
+    isSilenced(true)
     {
 
 }
@@ -18,6 +22,29 @@ void NibpController::startMeasurement() {
     emit nibpValChanged();
     
     QTimer::singleShot(3000, this, &NibpController::finishMeasurement);
+}
+
+bool NibpController::getIsAlarming() const {
+    return isAlarming;
+}
+
+void NibpController::loadLimits(const PatientScenario& scenario) {
+    upperLimit = scenario.nibpUpperAlarm;
+    lowerLimit = scenario.nibpLowerAlarm;
+}
+
+void NibpController::updateAlarm(bool alarmStatus) {
+
+    if (isAlarming != alarmStatus) {
+        isAlarming = alarmStatus;
+
+        if (isAlarming == true) {
+            isSilenced = false;
+        }
+
+        emit alarmStateChanged();
+    }
+
 }
 
 void NibpController::finishMeasurement() {
