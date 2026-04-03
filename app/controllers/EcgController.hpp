@@ -4,6 +4,7 @@
 #include <QTimer>
 #include "MitBihParser.hpp"
 #include "RingBuffer.hpp"
+#include "PatientScenario.hpp"
 
 
 class EcgController : public QObject {
@@ -39,14 +40,15 @@ public:
     // getter class for heart rate value
     int getHRVal() const;
 
-    void setThresholds(int threshold, int slopeThreshold);
-
 signals:
     // Signals that the ECG value has changed
     void ecgValChanged(int ecgVal);
 
     // Signlas that the heart rate value has changed
     void hrValChanged(int hrVal);
+
+public slots:
+    void loadLimits(const PatientScenario& scenario);
 
 private slots:
     // Callback for QTimer to grab next number from buffer

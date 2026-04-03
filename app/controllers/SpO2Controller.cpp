@@ -19,8 +19,8 @@ bool SpO2Controller::getIsAlarming() const {
     return isAlarming;
 }
 
-void SpO2Controller::setLowerLimit(int newLowerLimit) {
-    lowerLimit = newLowerLimit;
+void SpO2Controller::loadLimits(const PatientScenario& scenario) {
+    lowerLimit = scenario.spo2LowerAlarm;
 }
 
 void SpO2Controller::updateAlarm(bool alarmStatus) {

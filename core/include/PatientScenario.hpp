@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QMetaType>
 
 struct PatientScenario
 {
@@ -20,3 +21,5 @@ struct PatientScenario
     int ecgThreshold;
     int ecgSlopeThreshold;
 };
+
+Q_DECLARE_METATYPE(PatientScenario);

@@ -54,5 +54,5 @@ public:
 signals:
     void currentScenarioChanged();
 
-    void scenarioLoaded(int threshold, int slopeThreshold);
+    void scenarioLoaded(const PatientScenario &scenario);
 };

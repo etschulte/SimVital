@@ -50,13 +50,14 @@ void SimulationEngine::switchScenario(QString scenarioFile) {
 
     m_currentScenario = scenario.name;
     emit currentScenarioChanged();
-    emit scenarioLoaded(scenario.ecgThreshold, scenario.ecgSlopeThreshold);
+    emit scenarioLoaded(scenario);
 
     parser.loadFile(scenario.ecgFile, scenario.startingIndex);
     spo2Gen.setTargetVal(scenario.spo2);
     rrGen.setTargetVal(scenario.respiratoryRate);
     nibpGen.setSystolicVal(scenario.nibpSystolic);
     nibpGen.setDiastolicVal(scenario.nibpDiastolic);
+
 
     buffer.reset();
 

@@ -33,9 +33,9 @@ int EcgController::getHRVal() const {
     return m_currentBpm;
 }
 
-void EcgController::setThresholds(int newThreshold, int newSlopeThreshold) {
-    threshold = newThreshold;
-    slopeThreshold = newSlopeThreshold;
+void EcgController::loadLimits(const PatientScenario& scenario) {
+    threshold = scenario.ecgThreshold;
+    slopeThreshold = scenario.ecgSlopeThreshold;
     wasAboveThreshold = false;
     seenFirstPeak = false;
     samplesSinceLastBeat = 0;
