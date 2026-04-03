@@ -12,6 +12,8 @@
   "NIBPDiastolic": 50,
   "NIBPUpperAlarm": 160,
   "NIBPLowerAlarm": 90,
+  "HRUpperAlarm": 120,
+  "HRLowerAlarm": 50,
   "ecgThreshold": 1100,
   "ecgSlopeThreshold": 20,
   "description": "A life-threatening 'wide-complex' tachycardia originating in the ventricles. Characterized by fast, 'tombstone-like' waves. The heart is beating too fast to fill with blood, usually leading to a drop in SpO2."

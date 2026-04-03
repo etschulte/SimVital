@@ -12,6 +12,8 @@
   "NIBPDiastolic": 75,
   "NIBPUpperAlarm": 160,
   "NIBPLowerAlarm": 90,
+  "HRUpperAlarm": 120,
+  "HRLowerAlarm": 50,
   "ecgThreshold": 1100,
   "ecgSlopeThreshold": 20,
   "description": "Irregularly irregular rhythm caused by chaotic electrical signals in the atria. The baseline is shaky (fibrillatory waves) instead of having clear P-waves, and the heart rate jumps unpredictably."

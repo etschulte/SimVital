@@ -11,6 +11,7 @@ class EcgController : public QObject {
     Q_OBJECT // QObject Macro
     Q_PROPERTY(int ecgVal READ getEcgVal NOTIFY ecgValChanged) // QProperty Macro
     Q_PROPERTY(int hrVal READ getHRVal NOTIFY hrValChanged)
+    Q_PROPERTY(bool isAlarming READ getIsAlarming NOTIFY alarmStateChanged)
 
 private:
     MitBihParser* parserPtr; // Pointer to the MitBihParser so that we can use that object when created in main
@@ -25,6 +26,10 @@ private:
     int refractoryCounter; // cooldown timer
     int m_currentBpm; // stores calculated current BPM
     bool seenFirstPeak; // tracks if we have seen the first peak yet
+    int upperLimit;
+    int lowerLimit;
+    bool isAlarming;
+    bool isSilenced;
 
 public:
     const int sampleRate = 360; // amount of data points that equal 1 second
@@ -40,6 +45,10 @@ public:
     // getter class for heart rate value
     int getHRVal() const;
 
+    void setThresholds(const PatientScenario& scenario);
+
+    bool getIsAlarming() const;
+
 signals:
     // Signals that the ECG value has changed
     void ecgValChanged(int ecgVal);
@@ -47,8 +56,12 @@ signals:
     // Signlas that the heart rate value has changed
     void hrValChanged(int hrVal);
 
+    void alarmStateChanged();
+
 public slots:
     void loadLimits(const PatientScenario& scenario);
+
+    void updateAlarm(bool alarmStatus);
 
 private slots:
     // Callback for QTimer to grab next number from buffer

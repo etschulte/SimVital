@@ -13,7 +13,11 @@ EcgController::EcgController(MitBihParser* parser, RingBuffer* buffer, QObject* 
     samplesSinceLastBeat(0),
     refractoryCounter(0),
     m_currentBpm(0) ,
-    seenFirstPeak(false)
+    seenFirstPeak(false),
+    upperLimit(0),
+    lowerLimit(0),
+    isAlarming(false),
+    isSilenced(true)
     {
 
     timerPtr = new QTimer(this);
@@ -33,12 +37,35 @@ int EcgController::getHRVal() const {
     return m_currentBpm;
 }
 
-void EcgController::loadLimits(const PatientScenario& scenario) {
+void EcgController::setThresholds(const PatientScenario& scenario) {
     threshold = scenario.ecgThreshold;
     slopeThreshold = scenario.ecgSlopeThreshold;
     wasAboveThreshold = false;
     seenFirstPeak = false;
     samplesSinceLastBeat = 0;
+}
+
+bool EcgController::getIsAlarming() const {
+    return isAlarming;
+}
+
+void EcgController::loadLimits(const PatientScenario& scenario) {
+    upperLimit = scenario.HRUpperAlarm;
+    lowerLimit = scenario.HRLowerAlarm;
+}
+
+void EcgController::updateAlarm(bool alarmStatus) {
+
+    if (isAlarming != alarmStatus) {
+        isAlarming = alarmStatus;
+
+        if (isAlarming == true) {
+            isSilenced = false;
+        }
+
+        emit alarmStateChanged();
+    }
+
 }
 
 void EcgController::onTick() {

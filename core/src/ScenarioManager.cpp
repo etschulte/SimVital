@@ -37,6 +37,8 @@ PatientScenario ScenarioManager::loadScenario(const QString& jsonFile) const {
     scenario.nibpDiastolic = jsonObj["NIBPDiastolic"].toInt();
     scenario.nibpUpperAlarm = jsonObj["NIBPUpperAlarm"].toInt();
     scenario.nibpLowerAlarm = jsonObj["NIBPLowerAlarm"].toInt();
+    scenario.HRUpperAlarm = jsonObj["HRUpperAlarm"].toInt();
+    scenario.HRLowerAlarm = jsonObj["HRLowerAlarm"].toInt();
     scenario.ecgThreshold = jsonObj["ecgThreshold"].toInt();
     scenario.ecgSlopeThreshold = jsonObj["ecgSlopeThreshold"].toInt();
 

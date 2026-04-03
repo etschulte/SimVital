@@ -12,6 +12,8 @@
   "NIBPDiastolic": 0,
   "NIBPUpperAlarm": 160,
   "NIBPLowerAlarm": 90,
+  "HRUpperAlarm": 120,
+  "HRLowerAlarm": 50,
   "ecgThreshold": 9999,
   "ecgSlopeThreshold": 9999,
   "description": "Cardiac arrest rhythm where the heart muscle shivers rather than contracts. No coordinated pulse is produced. The ECG shows chaotic 'fine' or 'coarse' waves, HR should read 0, and SpO2 should flatline."

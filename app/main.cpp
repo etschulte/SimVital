@@ -42,6 +42,7 @@ int main(int argc, char *argv[]) {
     
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2WaveGen(), &SpO2WaveGenerator::setHeartRate);
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2Gen(), &SpO2Generator::setHeartRate);
+    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::setThresholds);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &spo2Controller, &SpO2Controller::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &rrController, &RrController::loadLimits);
