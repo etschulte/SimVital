@@ -34,6 +34,11 @@ set_source_files_properties(qml/main.qml
     main.qml
 )
 
+set_source_files_properties("../data/audio/TF002.WAV"
+    PROPERTIES
+    QT_RESOURCE_ALIAS "alarm.wav"
+)
+
 qt_add_qml_module(SimVitalApp 
     URI SimVital 
     VERSION 1.0 
@@ -49,6 +54,12 @@ qt_add_qml_module(SimVitalApp
         qml/TrendsScreen.qml
         qml/PatientScreen.qml
         qml/ScenarioButton.qml
+)
+
+qt_add_resources(SimVitalApp
+    "audio_assets"
+    PREFIX "/sounds"
+    FILES "../data/audio/TF002.WAV"
 )
 
 # Gives access to SimVitalCore's headers

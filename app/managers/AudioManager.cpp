@@ -16,7 +16,7 @@ AudioManager::AudioManager(EcgController* ecg, SpO2Controller* spo2, NibpControl
     connect(timerPtr, &QTimer::timeout, this, &AudioManager::evaluateAudioState);
 
     audioPlayerPtr = new QSoundEffect(this);
-    audioPlayerPtr->setSource(QUrl::fromLocalFile("/mnt/New Volume/School/2026_Spring/SENG499/SimVital/data/audio/TF002.WAV"));
+    audioPlayerPtr->setSource(QUrl("qrc:/sounds/alarm.wav"));
     audioPlayerPtr->setLoopCount(QSoundEffect::Infinite);
     audioPlayerPtr->setVolume(0.5);
 
@@ -39,6 +39,6 @@ void AudioManager::evaluateAudioState() {
 }
 
 void AudioManager::silenceAlarms() {
-    timerPtr->start(10000);
+    timerPtr->start(120000);
     audioPlayerPtr->stop();
 }
