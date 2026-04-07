@@ -41,6 +41,12 @@ Rectangle {
         } 
 
         NavButton {
+            titleText: "Reset"
+            iconSource: ""
+            onClicked: simEngine.switchScenario("data/jsonFiles/normal.json")
+        } 
+
+        NavButton {
             titleText: "Control Panel"
             iconSource: ""
             onClicked: controlPanelRequested()
