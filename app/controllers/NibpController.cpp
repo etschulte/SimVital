@@ -9,8 +9,8 @@ NibpController::NibpController(NibpGenerator* generator, QObject* parent)
     nibpGeneratorPtr(generator),
     currentNibpReading("--"),
     currentTime("--"),
-    upperLimit(0),
-    lowerLimit(0),
+    upperLimit(160),
+    lowerLimit(90),
     isAlarming(false),
     isSilenced(true)
     {
@@ -48,7 +48,11 @@ void NibpController::updateAlarm(bool alarmStatus) {
 }
 
 void NibpController::finishMeasurement() {
+    bool shouldBeAlarming = false;
     std::pair<int, int> valuePair = nibpGeneratorPtr->generateReading();
+
+    shouldBeAlarming = (valuePair.first <= lowerLimit || valuePair.first >= upperLimit);
+    updateAlarm(shouldBeAlarming);
     
     QString firstReading = QString::number(valuePair.first);
     QString secondReading = QString::number(valuePair.second);

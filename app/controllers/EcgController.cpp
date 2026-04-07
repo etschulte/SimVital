@@ -14,8 +14,8 @@ EcgController::EcgController(MitBihParser* parser, RingBuffer* buffer, QObject* 
     refractoryCounter(0),
     m_currentBpm(0) ,
     seenFirstPeak(false),
-    upperLimit(0),
-    lowerLimit(0),
+    upperLimit(120),
+    lowerLimit(50),
     isAlarming(false),
     isSilenced(true)
     {
@@ -70,6 +70,7 @@ void EcgController::updateAlarm(bool alarmStatus) {
 
 void EcgController::onTick() {
     int nextVal = 0;
+    bool shouldBeAlarming = false;
 
     if (bufferPtr->read(nextVal)) {
         int slope = nextVal - recentEcgVal;
@@ -87,6 +88,9 @@ void EcgController::onTick() {
             if (m_currentBpm != 0) {
                 m_currentBpm = 0;
                 emit hrValChanged(m_currentBpm);
+
+                shouldBeAlarming = (m_currentBpm <= lowerLimit || m_currentBpm >= upperLimit);
+                updateAlarm(shouldBeAlarming);
             }
         }
 
@@ -97,6 +101,9 @@ void EcgController::onTick() {
             } else {
                 m_currentBpm = (60 * sampleRate) / samplesSinceLastBeat;
                 emit hrValChanged(m_currentBpm);
+
+                shouldBeAlarming = (m_currentBpm <= lowerLimit || m_currentBpm >= upperLimit);
+                updateAlarm(shouldBeAlarming);
             }
 
             samplesSinceLastBeat = 0;

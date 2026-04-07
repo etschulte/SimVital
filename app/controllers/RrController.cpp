@@ -1,11 +1,12 @@
 #include "RrController.hpp"
+#include <QDebug>
 
 RrController::RrController(RrGenerator* generator, QObject* parent) 
     : QObject(parent),
     generatorPtr(generator),
     latestRR(0),
-    lowerLimit(0),
-    upperLimit(0),
+    upperLimit(25),
+    lowerLimit(10),
     isAlarming(false),
     isSilenced(true)
     {
@@ -39,7 +40,11 @@ void RrController::updateAlarm(bool alarmStatus) {
 }
 
 void RrController::updateRRVal(int rrVal) {
+    bool shouldBeAlarming = false;
     latestRR = rrVal;
+
+    shouldBeAlarming = (latestRR <= lowerLimit || latestRR >= upperLimit);
+    updateAlarm(shouldBeAlarming);
 
     emit rrValChanged();
 }

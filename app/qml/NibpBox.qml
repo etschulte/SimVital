@@ -4,14 +4,33 @@ import QtQuick.Layouts
 
 Rectangle {
     id: root
-    color: "#2a2a2a" 
+    color: flashState ? "#8b0000" : "#2a2a2a" 
     radius: 8
 
     // --- Public API for main.qml ---
     property string valueText: "--/--"
     property string lastMeasureTime: "--:--"
+    property bool flashState: false
+    property bool isAlarming: false
     
     signal measureClicked()
+
+    Timer {
+        id: alarmTimer
+        interval: 500      
+        repeat: true
+        running: root.isAlarming 
+        
+        onTriggered: {
+            root.flashState = !root.flashState
+        }
+        
+        onRunningChanged: {
+            if (!running) {
+                root.flashState = false
+            }
+        }
+    }
 
     ColumnLayout {
         anchors.fill: parent

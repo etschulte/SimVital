@@ -3,13 +3,32 @@ import QtQuick
 Rectangle {
     id: root
     width: 200; height: 180
-    color: "#2a2a2a"
+    color: flashState ? "#8b0000" : "#2a2a2a" 
     radius: 8
 
     property string titleText: "TITLE"
     property string unitText: "unit"
     property string valueText: "--"
     property color valueColor: "#ffffff"
+    property bool flashState: false
+    property bool isAlarming: false
+
+    Timer {
+        id: alarmTimer
+        interval: 500      
+        repeat: true
+        running: root.isAlarming 
+        
+        onTriggered: {
+            root.flashState = !root.flashState
+        }
+        
+        onRunningChanged: {
+            if (!running) {
+                root.flashState = false
+            }
+        }
+    }
 
     Text {
         id: titleLabel

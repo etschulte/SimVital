@@ -4,7 +4,7 @@ SpO2Controller::SpO2Controller(SpO2Generator* generator, QObject* parent)
     : QObject(parent),
     generatorPtr(generator),
     latestSpO2Val(0),
-    lowerLimit(0),
+    lowerLimit(90),
     isAlarming(false),
     isSilenced(true)
     {

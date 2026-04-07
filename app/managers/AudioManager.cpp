@@ -31,7 +31,7 @@ void AudioManager::evaluateAudioState() {
         || rrPtr->getIsAlarming();
     bool isSilenced = timerPtr->isActive();
 
-    if (isCrashing && !isSilenced) {
+    if (isCrashing && !isSilenced && !audioPlayerPtr->isPlaying()) {
         audioPlayerPtr->play();
     } else {
         audioPlayerPtr->stop();
