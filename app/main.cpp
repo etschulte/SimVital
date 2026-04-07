@@ -20,6 +20,7 @@
 #include "controllers/NibpController.hpp"
 #include "../core/include/NibpGenerator.hpp"
 #include "../core/include/SimulationEngine.hpp"
+#include "managers/AudioManager.hpp"
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
@@ -33,12 +34,15 @@ int main(int argc, char *argv[]) {
     RrController rrController(engineCore.getRRGen());
     NibpController nipbController(engineCore.getNibpGen());
 
+    AudioManager audioManager(&ecgController, &spo2Controller, &nipbController, &rrController);
+
     engine.rootContext()->setContextProperty("ecgController", &ecgController);
     engine.rootContext()->setContextProperty("spo2Controller", &spo2Controller);
     engine.rootContext()->setContextProperty("spo2WaveController", &spo2WaveController);
     engine.rootContext()->setContextProperty("rrController", &rrController);
     engine.rootContext()->setContextProperty("nibpController", &nipbController);
     engine.rootContext()->setContextProperty("simEngine", &engineCore);
+    engine.rootContext()->setContextProperty("audioManager", &audioManager);
     
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2WaveGen(), &SpO2WaveGenerator::setHeartRate);
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2Gen(), &SpO2Generator::setHeartRate);

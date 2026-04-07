@@ -34,7 +34,7 @@ void RrController::updateAlarm(bool alarmStatus) {
             isSilenced = false;
         }
 
-        emit alarmSateChanged();
+        emit alarmStateChanged();
     }
 }
 

@@ -8,7 +8,7 @@
 class RrController : public QObject {
     Q_OBJECT
     Q_PROPERTY(int rrVal READ getRRVal NOTIFY rrValChanged)
-    Q_PROPERTY(bool isAlarming READ getIsAlarming NOTIFY alarmSateChanged)
+    Q_PROPERTY(bool isAlarming READ getIsAlarming NOTIFY alarmStateChanged)
 
 private:
     int latestRR;
@@ -35,5 +35,5 @@ public slots:
 signals:
     void rrValChanged();
 
-    void alarmSateChanged();
+    void alarmStateChanged();
 };
