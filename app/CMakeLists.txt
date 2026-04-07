@@ -23,6 +23,8 @@ add_executable(SimVitalApp
     ../core/include/SpO2WaveGenerator.hpp
     ../core/include/RrGenerator.hpp
     ../core/include/NibpGenerator.hpp
+    managers/AudioManager.hpp
+    managers/AudioManager.cpp
     
 )
 
