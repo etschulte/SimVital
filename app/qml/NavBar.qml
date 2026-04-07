@@ -37,6 +37,7 @@ Rectangle {
         NavButton {
             titleText: "Silence"
             iconSource: ""
+            onClicked: audioManager.silenceAlarms()
         } 
 
         NavButton {

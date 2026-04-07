@@ -1,5 +1,7 @@
 #include "AudioManager.hpp"
 
+#include <QDebug>
+
 AudioManager::AudioManager(EcgController* ecg, SpO2Controller* spo2, NibpController* nibp, 
     RrController* rr, QObject* parent)
     : QObject(parent),
@@ -10,10 +12,11 @@ AudioManager::AudioManager(EcgController* ecg, SpO2Controller* spo2, NibpControl
     {
     
     timerPtr = new QTimer(this);
+    timerPtr->setSingleShot(true);
     connect(timerPtr, &QTimer::timeout, this, &AudioManager::evaluateAudioState);
 
     audioPlayerPtr = new QSoundEffect(this);
-    audioPlayerPtr->setSource(QUrl::fromLocalFile("../data/audio/TF002.WAV"));
+    audioPlayerPtr->setSource(QUrl::fromLocalFile("/mnt/New Volume/School/2026_Spring/SENG499/SimVital/data/audio/TF002.WAV"));
     audioPlayerPtr->setLoopCount(QSoundEffect::Infinite);
     audioPlayerPtr->setVolume(0.5);
 
@@ -36,6 +39,6 @@ void AudioManager::evaluateAudioState() {
 }
 
 void AudioManager::silenceAlarms() {
-    timerPtr->start(120000);
+    timerPtr->start(10000);
     audioPlayerPtr->stop();
 }
