@@ -14,6 +14,7 @@ add_library(SimVitalCore STATIC
     src/RrGenerator.cpp
     src/NibpGenerator.cpp
     src/SimulationEngine.cpp
+    src/DatabaseManager.cpp
 )
 
 target_include_directories(SimVitalCore PUBLIC
