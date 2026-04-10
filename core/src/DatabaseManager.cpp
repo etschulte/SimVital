@@ -21,4 +21,35 @@ void DatabaseManager::initDatabase() {
         "username TEXT unique,"
         "passwordHash TEXT"
         ");";
+
+    initQuery.exec(queryText);
+
+    QSqlQuery checkQuery;
+    checkQuery.exec("SELECT COUNT(*) FROM users;");
+    checkQuery.next();
+    int userCount = checkQuery.value(0).toInt();
+
+    if (userCount == 0) {
+        qDebug() << "Database is empty. Seeding default Admin account...";
+
+        QByteArray passwordStr = "admin123";
+        QByteArray hashedData = QCryptographicHash::hash(passwordStr, QCryptographicHash::Sha256);
+        QString hashedPassword = QString(hashedData.toHex()); 
+
+        QSqlQuery insertQuery;
+        insertQuery.prepare("INSERT INTO users (firstName, lastName, role, username, passwordHash) "
+                            "VALUES (:first, :last, :role, :user, :hash)");
+        
+        insertQuery.bindValue(":first", "Master");
+        insertQuery.bindValue(":last", "Admin");
+        insertQuery.bindValue(":role", "Admin");
+        insertQuery.bindValue(":user", "admin");
+        insertQuery.bindValue(":hash", hashedPassword);
+
+        if (!insertQuery.exec()) {
+            qDebug() << "Failed to seed default admin!";
+        } else {
+            qDebug() << "Default admin created successfully.";
+        }
+    }
 }
