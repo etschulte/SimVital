@@ -22,6 +22,9 @@ target_include_directories(SimVitalCore PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}/SimVitalCore_autogen/include
 )
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core Sql)
 
-target_link_libraries(SimVitalCore PUBLIC Qt6::Core)
+target_link_libraries(SimVitalCore PUBLIC 
+    Qt6::Core
+    Qt6::Sql
+)
