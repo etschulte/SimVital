@@ -57,3 +57,33 @@ void DatabaseManager::initDatabase() {
         }
     }
 }
+
+QString DatabaseManager::verifyUser(const QString& username, const QString& password) {
+    QByteArray passwordStr = password.toUtf8();
+    QByteArray hashedData = QCryptographicHash::hash(passwordStr, QCryptographicHash::Sha256);
+    QString hashedInput = QString(hashedData.toHex());
+
+    QSqlQuery query;
+    query.prepare("SELECT passwordHash, role FROM users WHERE username = :user");
+    query.bindValue(":user", username);
+
+    if (query.exec()) {
+        if (query.next()) {
+            QString storedHash = query.value(0).toString();
+            QString role = query.value(1).toString();       
+
+            if (hashedInput == storedHash) {
+                qDebug() << "Login successful. Role:" << role;
+                return role;
+            } else {
+                qDebug() << "Login failed: Invalid password.";
+            }
+        } else {
+             qDebug() << "Login failed: Username not found.";
+        }
+    } else {
+        qDebug() << "Database error during login:" << query.lastError().text();
+    }
+
+    return "";
+}

@@ -14,4 +14,6 @@ public:
     DatabaseManager();
 
     void initDatabase();
+
+    QString verifyUser(const QString& username, const QString& password);
 };
