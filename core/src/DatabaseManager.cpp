@@ -3,8 +3,12 @@
 #include <QDebug>
 
 DatabaseManager::DatabaseManager() {
-    dbConnection = QSqlDatabase::addDatabase("QSQLITE");
-    dbConnection.setDatabaseName("simvital.db");
+    if (QSqlDatabase::contains()) {
+        dbConnection = QSqlDatabase::database();
+    } else {
+        dbConnection = QSqlDatabase::addDatabase("QSQLITE");
+        dbConnection.setDatabaseName("simvital.db");
+    }
 }
 
 void DatabaseManager::initDatabase() {
