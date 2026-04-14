@@ -5,6 +5,7 @@
 #include <chrono>
 #include <QDebug>
 #include <QObject>
+#include <QQmlContext>
 
 #include "../core/include/MitBihParser.hpp"
 #include "../core/include/RingBuffer.hpp"
@@ -21,12 +22,17 @@
 #include "../core/include/NibpGenerator.hpp"
 #include "../core/include/SimulationEngine.hpp"
 #include "managers/AudioManager.hpp"
+#include "../core/include/DatabaseManager.hpp"
+#include "managers/SessionManager.hpp"
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
     SimulationEngine engineCore;
+
+    DatabaseManager dbManager;
+    dbManager.initDatabase();
 
     EcgController ecgController(engineCore.getParser(), engineCore.getBuffer());
     SpO2Controller spo2Controller(engineCore.getSpO2Gen());
@@ -35,6 +41,7 @@ int main(int argc, char *argv[]) {
     NibpController nipbController(engineCore.getNibpGen());
 
     AudioManager audioManager(&ecgController, &spo2Controller, &nipbController, &rrController);
+    SessionManager sessionManager(&dbManager);
 
     engine.rootContext()->setContextProperty("ecgController", &ecgController);
     engine.rootContext()->setContextProperty("spo2Controller", &spo2Controller);
@@ -43,6 +50,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("nibpController", &nipbController);
     engine.rootContext()->setContextProperty("simEngine", &engineCore);
     engine.rootContext()->setContextProperty("audioManager", &audioManager);
+    engine.rootContext()->setContextProperty("sessionManager", &sessionManager);
     
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2WaveGen(), &SpO2WaveGenerator::setHeartRate);
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2Gen(), &SpO2Generator::setHeartRate);
@@ -51,7 +59,6 @@ int main(int argc, char *argv[]) {
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &spo2Controller, &SpO2Controller::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &rrController, &RrController::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::loadLimits);
-
 
     const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml")); // telling the QML engine to load the main qml file
     engine.load(url);
