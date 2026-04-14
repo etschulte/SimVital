@@ -3,6 +3,8 @@
 #include <QtSql>
 #include <QObject>
 
+#include "UserData.hpp"
+
 
 class DatabaseManager : public QObject {
     Q_OBJECT
@@ -15,5 +17,5 @@ public:
 
     void initDatabase();
 
-    QString verifyUser(const QString& username, const QString& password);
+    UserData verifyUser(const QString& username, const QString& password);
 };

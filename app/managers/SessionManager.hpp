@@ -8,9 +8,11 @@
 class SessionManager : public QObject{
     Q_OBJECT
     Q_PROPERTY(QString currentUserRole READ getUserRole NOTIFY userRoleChanged)
+    Q_PROPERTY(QString currentUserName READ getUserName NOTIFY currentUserNameChanged)
 
 private:
     QString m_currentRole;
+    QString m_currentUserName;
     bool m_isLoggedIn;
     DatabaseManager* dbManagerPtr;
 
@@ -23,8 +25,12 @@ public:
 
     QString getUserRole() const;
 
+    QString getUserName() const;
+
 signals:
     void userRoleChanged();
+
+    void currentUserNameChanged();
 
     void loginFailed();
 

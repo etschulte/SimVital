@@ -51,7 +51,7 @@ Item {
                 Layout.preferredHeight: 30
 
                 Text {
-                    text: "PLACEHOLDER NURSE                   PLACEHOLDER PATIENT"
+                    text: sessionManager.currentUserName + "                      Role: " + sessionManager.currentUserRole
                     color: "#a0a0a0"
                     font.pixelSize: 16
                 }
