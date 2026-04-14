@@ -27,4 +27,6 @@ signals:
     void userRoleChanged();
 
     void loginFailed();
+
+    void loginSuccess();
 };

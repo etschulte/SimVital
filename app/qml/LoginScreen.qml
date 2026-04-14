@@ -55,5 +55,10 @@ Rectangle {
         function onLoginFailed() {
             errorText.visible = true;
         }
+
+        function onLoginSuccess() {
+            usernameInput.text = "";
+            passwordInput.text = "";
+        }
     }
 }

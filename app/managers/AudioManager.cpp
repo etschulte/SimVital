@@ -18,7 +18,7 @@ AudioManager::AudioManager(EcgController* ecg, SpO2Controller* spo2, NibpControl
     audioPlayerPtr = new QSoundEffect(this);
     audioPlayerPtr->setSource(QUrl("qrc:/sounds/alarm.wav"));
     audioPlayerPtr->setLoopCount(QSoundEffect::Infinite);
-    audioPlayerPtr->setVolume(0.5);
+    audioPlayerPtr->setVolume(0.3);
 
     connect(ecgPtr, &EcgController::alarmStateChanged, this, &AudioManager::evaluateAudioState);
     connect(spo2Ptr, &SpO2Controller::alarmStateChanged, this, &AudioManager::evaluateAudioState);
@@ -40,5 +40,10 @@ void AudioManager::evaluateAudioState() {
 
 void AudioManager::silenceAlarms() {
     timerPtr->start(120000);
+    audioPlayerPtr->stop();
+}
+
+void AudioManager::reset() {
+    timerPtr->stop();
     audioPlayerPtr->stop();
 }

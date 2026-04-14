@@ -15,6 +15,7 @@ void SessionManager::login(const QString& username, const QString& password) {
         m_currentRole = loginAttempt;
         m_isLoggedIn = true;
 
+        emit loginSuccess();
         emit userRoleChanged();
     } else {
         emit loginFailed();

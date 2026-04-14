@@ -25,6 +25,8 @@ public:
 
     Q_INVOKABLE void silenceAlarms();
 
+    void reset();
+
 public slots:
     void evaluateAudioState();
 };
