@@ -113,3 +113,60 @@ UserData DatabaseManager::verifyUser(const QString& username, const QString& pas
 
     return userData;
 }
+
+bool DatabaseManager::addUser(const QString& firstName, const QString& lastName, const QString& role, const QString& username, const QString& password) {
+    
+    QByteArray passwordStr = password.toUtf8();
+    QByteArray hashedData = QCryptographicHash::hash(passwordStr, QCryptographicHash::Sha256);
+    QString hashedPassword = QString(hashedData.toHex()); 
+
+    QSqlQuery query;
+    query.prepare("INSERT INTO users (firstName, lastName, role, username, passwordHash) "
+                  "VALUES (:first, :last, :role, :user, :hash)");
+                  
+    query.bindValue(":first", firstName);
+    query.bindValue(":last", lastName);
+    query.bindValue(":role", role);
+    query.bindValue(":user", username);
+    query.bindValue(":hash", hashedPassword); 
+
+    if (!query.exec()) {
+        qDebug() << "Error adding user:" << query.lastError().text();
+        return false; 
+    }
+    
+    qDebug() << "User" << username << "added successfully.";
+    return true;
+}
+
+bool DatabaseManager::removeUser(const QString& username) {
+    QSqlQuery query;
+    query.prepare("DELETE FROM users WHERE username = :user");
+    query.bindValue(":user", username);
+
+    if (!query.exec()) {
+        qDebug() << "Error removing user:" << query.lastError().text();
+        return false; 
+    }
+    
+    qDebug() << "User" << username << "removed successfully.";
+    return true;
+}
+
+QList<UserData> DatabaseManager::getAllUsers() {
+    QList<UserData> userList;
+    
+    QSqlQuery query("SELECT firstName, lastName, role, username FROM users");
+
+    while (query.next()) {
+        UserData user;
+        user.firstName = query.value(0).toString();
+        user.lastName = query.value(1).toString();
+        user.role = query.value(2).toString();
+        user.username = query.value(3).toString(); 
+        
+        userList.append(user);
+    }
+    
+    return userList;
+}

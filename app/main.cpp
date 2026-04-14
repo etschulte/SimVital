@@ -24,6 +24,7 @@
 #include "managers/AudioManager.hpp"
 #include "../core/include/DatabaseManager.hpp"
 #include "managers/SessionManager.hpp"
+#include "managers/AdminManager.hpp"
 
 
 //TODO: Refactor into AppManager
@@ -45,6 +46,7 @@ int main(int argc, char *argv[]) {
 
     AudioManager audioManager(&ecgController, &spo2Controller, &nipbController, &rrController);
     SessionManager sessionManager(&dbManager);
+    AdminManager adminManager(&dbManager);
 
     engine.rootContext()->setContextProperty("ecgController", &ecgController);
     engine.rootContext()->setContextProperty("spo2Controller", &spo2Controller);
@@ -54,6 +56,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("simEngine", &engineCore);
     engine.rootContext()->setContextProperty("audioManager", &audioManager);
     engine.rootContext()->setContextProperty("sessionManager", &sessionManager);
+    engine.rootContext()->setContextProperty("adminManager", &adminManager);
     
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2WaveGen(), &SpO2WaveGenerator::setHeartRate);
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2Gen(), &SpO2Generator::setHeartRate);
