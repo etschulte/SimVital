@@ -31,6 +31,8 @@ public slots:
 
     void loadLimits(const PatientScenario& scenario);
 
+    void resetState();
+
 signals:
     void spO2ValChanged();
 

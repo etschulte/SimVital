@@ -26,6 +26,12 @@ void RrController::loadLimits(const PatientScenario& scenario) {
     lowerLimit = scenario.rrLowerAlarm;
 }
 
+void RrController::resetState() {
+    isAlarming = false;
+
+    emit alarmStateChanged();
+}
+
 void RrController::updateAlarm(bool alarmStatus) {
 
     if (isAlarming != alarmStatus) {

@@ -68,6 +68,12 @@ void EcgController::updateAlarm(bool alarmStatus) {
 
 }
 
+void EcgController::resetState() {
+    isAlarming = false;
+
+    emit alarmStateChanged();
+}
+
 void EcgController::onTick() {
     int nextVal = 0;
     bool shouldBeAlarming = false;

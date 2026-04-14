@@ -63,6 +63,8 @@ public slots:
 
     void updateAlarm(bool alarmStatus);
 
+    void resetState();
+
 private slots:
     // Callback for QTimer to grab next number from buffer
     void onTick();

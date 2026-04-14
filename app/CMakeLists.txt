@@ -51,7 +51,6 @@ qt_add_qml_module(SimVitalApp
         qml/MonitorScreen.qml
         qml/ControlPanelScreen.qml
         qml/LogoutScreen.qml
-        qml/TrendsScreen.qml
         qml/PatientScreen.qml
         qml/ScenarioButton.qml
         qml/LoginScreen.qml

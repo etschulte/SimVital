@@ -8,7 +8,8 @@ AudioManager::AudioManager(EcgController* ecg, SpO2Controller* spo2, NibpControl
     ecgPtr(ecg),
     spo2Ptr(spo2),
     nibpPtr(nibp),
-    rrPtr(rr)
+    rrPtr(rr),
+    m_systemActive(false)
     {
     
     timerPtr = new QTimer(this);
@@ -27,6 +28,10 @@ AudioManager::AudioManager(EcgController* ecg, SpO2Controller* spo2, NibpControl
 }
 
 void AudioManager::evaluateAudioState() {
+    if (!m_systemActive) {
+        return;
+    }
+
     bool isCrashing = ecgPtr->getIsAlarming() || spo2Ptr->getIsAlarming() || nibpPtr->getIsAlarming()
         || rrPtr->getIsAlarming();
     bool isSilenced = timerPtr->isActive();
@@ -46,4 +51,12 @@ void AudioManager::silenceAlarms() {
 void AudioManager::reset() {
     timerPtr->stop();
     audioPlayerPtr->stop();
+}
+
+void AudioManager::setSystemActive(bool active) {
+    m_systemActive = active;
+
+    if (!m_systemActive) {
+        reset();
+    }
 }

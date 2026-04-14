@@ -57,17 +57,28 @@ int main(int argc, char *argv[]) {
     
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2WaveGen(), &SpO2WaveGenerator::setHeartRate);
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2Gen(), &SpO2Generator::setHeartRate);
+    
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::setThresholds);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::loadLimits);
+    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::resetState);
+
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &spo2Controller, &SpO2Controller::loadLimits);
+    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &spo2Controller, &SpO2Controller::resetState);
+    
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &rrController, &RrController::loadLimits);
+    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &rrController, &RrController::resetState);
+
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::loadLimits);
-    QObject::connect(&sessionManager, &SessionManager::userRoleChanged, [&sessionManager, &engineCore]() {
+    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::resetState);
+
+    QObject::connect(&sessionManager, &SessionManager::userRoleChanged, [&sessionManager, &engineCore, &audioManager]() {
         if (sessionManager.getUserRole() != "") {
             engineCore.startSimulation();
+            audioManager.setSystemActive(true);
             qDebug() << "Session active: Simulation started";
         } else {
             engineCore.stopSimulation();
+            audioManager.setSystemActive(false);
             qDebug() << "Session ended: Simulation stopped";
         }
     });

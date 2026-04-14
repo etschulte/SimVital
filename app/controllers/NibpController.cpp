@@ -47,6 +47,12 @@ void NibpController::updateAlarm(bool alarmStatus) {
 
 }
 
+void NibpController::resetState() {
+    isAlarming = false;
+
+    emit alarmStateChanged();
+}
+
 void NibpController::finishMeasurement() {
     bool shouldBeAlarming = false;
     std::pair<int, int> valuePair = nibpGeneratorPtr->generateReading();

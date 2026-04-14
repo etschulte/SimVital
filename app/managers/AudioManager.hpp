@@ -19,6 +19,7 @@ private:
     RrController* rrPtr;
     QTimer* timerPtr;
     QSoundEffect* audioPlayerPtr;
+    bool m_systemActive;
 
 public:
     AudioManager(EcgController* ecg, SpO2Controller* spo2, NibpController* nibp, RrController* rr, QObject* parent = nullptr);
@@ -26,6 +27,8 @@ public:
     Q_INVOKABLE void silenceAlarms();
 
     void reset();
+
+    void setSystemActive(bool active);
 
 public slots:
     void evaluateAudioState();

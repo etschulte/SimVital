@@ -8,7 +8,6 @@ Rectangle {
 
     signal monitorScreenRequested()
     signal controlPanelRequested()
-    signal trendsScreenRequested()
     signal patientScreenRequested()
     signal logoutScreenRequested()
 
@@ -21,12 +20,6 @@ Rectangle {
             iconSource: ""
             onClicked: monitorScreenRequested()
         }
-
-        NavButton {
-            titleText: "Trends"
-            iconSource: ""
-            onClicked: trendsScreenRequested()
-        } 
 
         NavButton {
             titleText: "Patient"
