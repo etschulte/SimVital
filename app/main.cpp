@@ -25,6 +25,9 @@
 #include "../core/include/DatabaseManager.hpp"
 #include "managers/SessionManager.hpp"
 
+
+//TODO: Refactor into AppManager
+
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;

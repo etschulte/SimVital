@@ -32,7 +32,28 @@ Rectangle {
             Layout.preferredWidth: 300
             Layout.preferredHeight: 60
             font.pixelSize: 24
-            onClicked: sessionManager.login(usernameInput.text, passwordInput.text)
+            onClicked: {
+                errorText.visible = false;
+                sessionManager.login(usernameInput.text, passwordInput.text)
+            }
+        }
+
+        Text {
+            id: errorText
+            text: "Invalid Credentials"
+            Layout.preferredWidth: 300
+            Layout.preferredHeight: 60
+            font.pixelSize: 24
+            color: "#8b0000"
+            visible: false
+        }
+    }
+
+    Connections {
+        target: sessionManager
+
+        function onLoginFailed() {
+            errorText.visible = true;
         }
     }
 }

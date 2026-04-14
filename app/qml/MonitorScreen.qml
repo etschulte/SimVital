@@ -251,7 +251,7 @@ Item {
                     unitText: "bpm"
                     valueText: ecgController ? ecgController.hrVal : "--"
                     valueColor: "#00ff00"
-                    isAlarming: ecgController.isAlarming
+                    isAlarming: ecgController ? ecgController.isAlarming : false
                 }
 
                 NibpBox {
@@ -260,7 +260,7 @@ Item {
                     valueText: nibpController ? nibpController.readingVal : "--"
                     lastMeasureTime: nibpController ? nibpController.timeVal : "--"
                     onMeasureClicked: nibpController.startMeasurement()
-                    isAlarming: nibpController.isAlarming
+                    isAlarming: nibpController ? nibpController.isAlarming : false
                 }
 
                 ReadingsBox {
@@ -270,7 +270,7 @@ Item {
                     unitText: "%"
                     valueText: spo2Controller ? (spo2Controller.spO2Val === -1 ? "---" : spo2Controller.spO2Val) : "--"
                     valueColor: "#00bfff"
-                    isAlarming: spo2Controller.isAlarming
+                    isAlarming: spo2Controller ? spo2Controller.isAlarming : false
                 }
 
                 ReadingsBox {
@@ -280,7 +280,7 @@ Item {
                     unitText: "rpm"
                     valueText: rrController ? rrController.rrVal : "--"
                     valueColor: "#ffff00"
-                    isAlarming: rrController.isAlarming
+                    isAlarming: rrController ? rrController.isAlarming : false
                 }
             }
         }

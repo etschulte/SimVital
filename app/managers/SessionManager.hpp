@@ -25,4 +25,6 @@ public:
 
 signals:
     void userRoleChanged();
+
+    void loginFailed();
 };
