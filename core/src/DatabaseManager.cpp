@@ -1,8 +1,11 @@
 #include "DatabaseManager.hpp"
 
 #include <QDebug>
+#include <QCryptographicHash>
 
-DatabaseManager::DatabaseManager() {
+DatabaseManager::DatabaseManager(QObject* parent) 
+    : QObject(parent)
+    {
     if (QSqlDatabase::contains()) {
         dbConnection = QSqlDatabase::database();
     } else {

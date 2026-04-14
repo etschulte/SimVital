@@ -11,7 +11,7 @@ private:
     QSqlDatabase dbConnection;
 
 public:
-    DatabaseManager();
+    DatabaseManager(QObject* parent = nullptr);
 
     void initDatabase();
 
