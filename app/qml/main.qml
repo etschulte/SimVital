@@ -11,6 +11,7 @@ Window {
 
     RowLayout {
         anchors.fill: parent
+        visible: sessionManager ? sessionManager.currentUserRole != "" : false 
 
         Loader {
             id: mainLoader
@@ -32,5 +33,12 @@ Window {
             onTrendsScreenRequested: mainLoader.source = "qml/TrendsScreen.qml"
             onPatientScreenRequested: mainLoader.source = "qml/PatientScreen.qml"
         }
-    }    
+    }
+
+    Loader {
+        id: loginLoader
+        anchors.fill: parent
+        source: "qml/LoginScreen.qml"
+        visible: sessionManager ? sessionManager.currentUserRole === "" : false
+    }
 }

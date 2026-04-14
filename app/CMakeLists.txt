@@ -54,6 +54,7 @@ qt_add_qml_module(SimVitalApp
         qml/TrendsScreen.qml
         qml/PatientScreen.qml
         qml/ScenarioButton.qml
+        qml/LoginScreen.qml
 )
 
 qt_add_resources(SimVitalApp
