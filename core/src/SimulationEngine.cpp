@@ -10,9 +10,8 @@ SimulationEngine::SimulationEngine(QObject* parent)
     spo2WaveGen(),
     manager(),
     thread(),
-    flag(false)
+    flag(true)
 {
-    switchScenario("data/jsonFiles/normal.json");
 }
 
 SimulationEngine::~SimulationEngine() {
@@ -41,10 +40,7 @@ void SimulationEngine::fillBuffer() {
 }
 
 void SimulationEngine::switchScenario(QString scenarioFile) {
-    if (thread.joinable()) {
-        flag = true;
-        thread.join();
-    }
+    stopSimulation();
 
     PatientScenario scenario = manager.loadScenario(scenarioFile);
 
@@ -63,6 +59,17 @@ void SimulationEngine::switchScenario(QString scenarioFile) {
 
     flag = false;
     thread = std::thread(&SimulationEngine::fillBuffer, this);
+}
+
+void SimulationEngine::startSimulation() {
+    switchScenario("data/jsonFiles/normal.json");
+}
+
+void SimulationEngine::stopSimulation() {
+    if (thread.joinable()) {
+        flag = true;
+        thread.join();
+    }
 }
 
 MitBihParser* SimulationEngine::getParser() {

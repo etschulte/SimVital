@@ -37,6 +37,10 @@ public:
 
     Q_INVOKABLE void switchScenario(QString scenarioFile);
 
+    Q_INVOKABLE void startSimulation();
+
+    Q_INVOKABLE void stopSimulation();
+
     MitBihParser* getParser();
 
     RingBuffer* getBuffer();

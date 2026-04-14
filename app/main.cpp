@@ -59,8 +59,17 @@ int main(int argc, char *argv[]) {
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &spo2Controller, &SpO2Controller::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &rrController, &RrController::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::loadLimits);
+    QObject::connect(&sessionManager, &SessionManager::userRoleChanged, [&sessionManager, &engineCore]() {
+        if (sessionManager.getUserRole() != "") {
+            engineCore.startSimulation();
+            qDebug() << "Session active: Simulation started";
+        } else {
+            engineCore.stopSimulation();
+            qDebug() << "Session ended: Simulation stopped";
+        }
+    });
 
-    const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml")); // telling the QML engine to load the main qml file
+    const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml"));
     engine.load(url);
 
     int exitCode = app.exec();
