@@ -30,7 +30,6 @@ Window {
             onMonitorScreenRequested: mainLoader.source = "qml/MonitorScreen.qml"
             onControlPanelRequested: mainLoader.source = "qml/ControlPanelScreen.qml"
             onLogoutScreenRequested: logoutScreen.open()
-            onPatientScreenRequested: mainLoader.source = "qml/PatientScreen.qml"
         }
     }
 

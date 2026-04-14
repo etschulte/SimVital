@@ -16,16 +16,19 @@ Rectangle {
         spacing: 15
 
         NavButton {
+            id: adminButton
+            titleText: "Admin"
+            visible: sessionManager.currentUserRole === "Admin"
+            onClicked: {
+                console.log("Admin Screen Accessed")
+            }
+        }
+
+        NavButton {
             titleText: "Monitor"
             iconSource: ""
             onClicked: monitorScreenRequested()
         }
-
-        NavButton {
-            titleText: "Patient"
-            iconSource: ""
-            onClicked: patientScreenRequested()
-        } 
 
         NavButton {
             titleText: "Silence"

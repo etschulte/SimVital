@@ -37,7 +37,7 @@ void DatabaseManager::initDatabase() {
     int userCount = checkQuery.value(0).toInt();
 
     if (userCount == 0) {
-        qDebug() << "Database is empty. Seeding default Admin account...";
+        qDebug() << "Database is empty. Seeding default Admin and Instructor accounts...";
 
         QByteArray passwordStr = "admin123";
         QByteArray hashedData = QCryptographicHash::hash(passwordStr, QCryptographicHash::Sha256);
@@ -57,6 +57,26 @@ void DatabaseManager::initDatabase() {
             qDebug() << "Failed to seed default admin!";
         } else {
             qDebug() << "Default admin created successfully.";
+        }
+
+        QByteArray instPasswordStr = "instructor123";
+        QByteArray instHashedData = QCryptographicHash::hash(instPasswordStr, QCryptographicHash::Sha256);
+        QString instHashedPassword = QString(instHashedData.toHex()); 
+
+        QSqlQuery instInsertQuery;
+        instInsertQuery.prepare("INSERT INTO users (firstName, lastName, role, username, passwordHash) "
+                            "VALUES (:first, :last, :role, :user, :hash)");
+        
+        instInsertQuery.bindValue(":first", "Clinical");
+        instInsertQuery.bindValue(":last", "Instructor");
+        instInsertQuery.bindValue(":role", "Instructor");
+        instInsertQuery.bindValue(":user", "instructor");
+        instInsertQuery.bindValue(":hash", instHashedPassword);
+
+        if (!instInsertQuery.exec()) {
+            qDebug() << "Failed to seed default instructor!";
+        } else {
+            qDebug() << "Default instructor created successfully.";
         }
     }
 }
