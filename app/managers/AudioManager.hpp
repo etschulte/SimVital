@@ -20,11 +20,14 @@ private:
     QTimer* timerPtr;
     QSoundEffect* audioPlayerPtr;
     bool m_systemActive;
+    bool m_inAdminMenu;
 
 public:
     AudioManager(EcgController* ecg, SpO2Controller* spo2, NibpController* nibp, RrController* rr, QObject* parent = nullptr);
 
     Q_INVOKABLE void silenceAlarms();
+
+    Q_INVOKABLE void setAdminMute(bool isMuted);
 
     void reset();
 

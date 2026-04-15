@@ -20,13 +20,19 @@ Rectangle {
             id: adminButton
             titleText: "Admin"
             visible: sessionManager.currentUserRole === "Admin"
-            onClicked: adminScreenRequested()
+            onClicked: {
+                audioManager.setAdminMute(true)
+                adminScreenRequested()
+            }
         }
 
         NavButton {
             titleText: "Monitor"
             iconSource: ""
-            onClicked: monitorScreenRequested()
+            onClicked: {
+                monitorScreenRequested()
+                audioManager.setAdminMute(false)
+            }
         }
 
         NavButton {
@@ -44,7 +50,10 @@ Rectangle {
         NavButton {
             titleText: "Control Panel"
             iconSource: ""
-            onClicked: controlPanelRequested()
+            onClicked: {
+                controlPanelRequested()
+                audioManager.setAdminMute(false)
+            }
         } 
 
         NavButton {
