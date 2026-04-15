@@ -10,6 +10,7 @@ Rectangle {
     signal controlPanelRequested()
     signal patientScreenRequested()
     signal logoutScreenRequested()
+    signal adminScreenRequested()
 
     Column {
         anchors.centerIn: parent
@@ -19,9 +20,7 @@ Rectangle {
             id: adminButton
             titleText: "Admin"
             visible: sessionManager.currentUserRole === "Admin"
-            onClicked: {
-                console.log("Admin Screen Accessed")
-            }
+            onClicked: adminScreenRequested()
         }
 
         NavButton {
