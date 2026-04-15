@@ -14,7 +14,7 @@ void SessionManager::login(const QString& username, const QString& password) {
 
     if (userData.role != "") {
         m_currentRole = userData.role;
-        m_currentUserName = userData.firstName + userData.lastName;
+        m_currentUserName = userData.firstName + " " + userData.lastName;
         m_isLoggedIn = true;
 
         emit loginSuccess();
