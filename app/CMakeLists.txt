@@ -30,6 +30,7 @@ add_executable(SimVitalApp
     managers/AdminManager.cpp
     models/UserModel.hpp
     models/UserModel.cpp
+    ../resources.qrc
     
 )
 

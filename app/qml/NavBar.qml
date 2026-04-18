@@ -2,64 +2,78 @@ import QtQuick
 import QtQuick.Layouts
 
 Rectangle {
-    height: 60
+    height: 80 // Increased slightly to give the 70px buttons room to breathe
     color: "#2a2a2a"
     radius: 8
 
+    property string activeTab: "Monitor"
+
     signal monitorScreenRequested()
     signal controlPanelRequested()
-    signal patientScreenRequested()
     signal logoutScreenRequested()
     signal adminScreenRequested()
 
     Row {
         anchors.centerIn: parent
-        spacing: 90
+        spacing: 40 
 
         NavButton {
             id: adminButton
             titleText: "Admin"
+            iconSource: "qrc:/data/icons/admin.png"
             visible: sessionManager.currentUserRole === "Admin"
+            isActive: activeTab === "Admin"
             onClicked: {
                 audioManager.setAdminMute(true)
                 adminScreenRequested()
+                activeTab = "Admin"
             }
         }
 
         NavButton {
             titleText: "Monitor"
-            iconSource: ""
+            iconSource: "qrc:/data/icons/monitor.png"
+            isActive: activeTab === "Monitor"
             onClicked: {
                 monitorScreenRequested()
                 audioManager.setAdminMute(false)
+                activeTab = "Monitor"
             }
         }
 
         NavButton {
             titleText: "Silence"
-            iconSource: ""
-            onClicked: audioManager.silenceAlarms()
+            iconSource: "qrc:/data/icons/silence.png"
+            onClicked: {
+                audioManager.silenceAlarms()
+            }
         } 
 
         NavButton {
             titleText: "Reset"
-            iconSource: ""
-            onClicked: simEngine.switchScenario("data/jsonFiles/normal.json")
+            iconSource: "qrc:/data/icons/reset.png"
+            onClicked: {
+                simEngine.switchScenario("data/jsonFiles/normal.json")
+            }
         } 
 
         NavButton {
             titleText: "Control Panel"
-            iconSource: ""
+            iconSource: "qrc:/data/icons/control-panel.png"
+            isActive: activeTab === "ControlPanel"
             onClicked: {
                 controlPanelRequested()
                 audioManager.setAdminMute(false)
+                activeTab = "ControlPanel"
             }
         } 
 
         NavButton {
             titleText: "Logout"
-            iconSource: ""
-            onClicked: logoutScreenRequested()
+            iconSource: "qrc:/data/icons/logout.png"
+            onClicked: {
+                logoutScreenRequested()
+            }
         } 
     }
 }
