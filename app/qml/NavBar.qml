@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 
 Rectangle {
-    width: 80
+    height: 60
     color: "#2a2a2a"
     radius: 8
 
@@ -12,9 +12,9 @@ Rectangle {
     signal logoutScreenRequested()
     signal adminScreenRequested()
 
-    Column {
+    Row {
         anchors.centerIn: parent
-        spacing: 15
+        spacing: 90
 
         NavButton {
             id: adminButton

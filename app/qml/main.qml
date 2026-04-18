@@ -9,9 +9,10 @@ Window {
     title: "SimVital - Patient Monitor"
     color: "#1e1e1e"
 
-    RowLayout {
+    ColumnLayout {
         anchors.fill: parent
-        visible: sessionManager ? sessionManager.currentUserRole != "" : false 
+        visible: sessionManager ? sessionManager.currentUserRole != "" : false
+        spacing: 0
 
         Loader {
             id: mainLoader
@@ -21,12 +22,11 @@ Window {
         }
 
         NavBar {
-            Layout.preferredWidth: 80
-            Layout.fillHeight: true
-            Layout.topMargin: 60
-            Layout.bottomMargin: 15
+            Layout.fillWidth: true
+            Layout.preferredHeight: 60
+            Layout.leftMargin: 15
             Layout.rightMargin: 15
-
+            Layout.bottomMargin: 15
             onMonitorScreenRequested: mainLoader.source = "qml/MonitorScreen.qml"
             onControlPanelRequested: mainLoader.source = "qml/ControlPanelScreen.qml"
             onLogoutScreenRequested: logoutScreen.open()
