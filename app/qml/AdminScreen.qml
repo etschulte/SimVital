@@ -9,12 +9,9 @@ Rectangle {
 
     RowLayout {
         anchors.fill: parent
-        anchors.margins: 30
-        spacing: 40
+        anchors.margins: 15
+        spacing: 15
 
-        // ==========================================
-        // LEFT SIDE: The User Roster (ListView)
-        // ==========================================
         ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -78,18 +75,12 @@ Rectangle {
             }
         }
 
-        // ==========================================
-        // CENTER: Visual Divider
-        // ==========================================
         Rectangle {
             Layout.fillHeight: true
             Layout.preferredWidth: 2
             color: "#333333" 
         }
 
-        // ==========================================
-        // RIGHT SIDE: Registration Form
-        // ==========================================
         ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true

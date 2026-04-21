@@ -4,95 +4,75 @@ import QtQuick.Layouts
 
 Rectangle {
     id: panelRoot
+    anchors.fill: parent 
     color: "#1e1e1e"
 
     Rectangle {
-        width: 800
-        height: 50
-        anchors.margins: 15
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: "#2a2a2a"
-        radius: 8
-
-        Text {
-            anchors.top: parent.top
-            anchors.centerIn: parent
-            text: "Instructor Control Panel"
-            color: "#FFFFFF"
-            font.pixelSize: 36
-        }
-    }
-
-    Rectangle {
-        width: 280
-        height: 250
+        width: parent.width * 0.85
+        height: parent.height * 0.85
         anchors.centerIn: parent
         color: "#2a2a2a"
         radius: 8
 
-        Column {
+        ColumnLayout {
             anchors.fill: parent
             anchors.margins: 15
-            spacing: 15
+            spacing: 10 
 
             Text {
-                text: "Scenarios"
+                text: "Instructor Control Panel"
                 color: "#FFFFFF"
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter
                 font.pixelSize: 28
+                Layout.bottomMargin: 10
             }
 
             ScenarioButton {
                 scenarioName: "Normal Sinus Rhythm"
+                Layout.fillWidth: true
+                Layout.preferredHeight: 45 
                 isActive: simEngine ? simEngine.currentScenario === scenarioName : false
-                onClicked: {
-                    simEngine.switchScenario("data/jsonFiles/normal.json")
-                    console.log("switched to normal")
-                }
+                onClicked: simEngine.switchScenario("data/jsonFiles/normal.json")
                 textColor: "#a0a0a0"
             }
 
             ScenarioButton {
                 scenarioName: "Ventricular Tachycardia"
+                Layout.fillWidth: true
+                Layout.preferredHeight: 45
                 isActive: simEngine ? simEngine.currentScenario === scenarioName : false
-                onClicked: {
-                    simEngine.switchScenario("data/jsonFiles/vtach.json")
-                    console.log("switched to vtach")
-                }
+                onClicked: simEngine.switchScenario("data/jsonFiles/vtach.json")
                 textColor: "#a0a0a0"
             }
 
             ScenarioButton {
                 scenarioName: "Atrial Fibrillation"
+                Layout.fillWidth: true
+                Layout.preferredHeight: 45
                 isActive: simEngine ? simEngine.currentScenario === scenarioName : false
-                onClicked: {
-                    simEngine.switchScenario("data/jsonFiles/afib.json")
-                    console.log("switched to afib")
-                }
+                onClicked: simEngine.switchScenario("data/jsonFiles/afib.json")
                 textColor: "#a0a0a0"
             }
 
             ScenarioButton {
                 scenarioName: "Ventricular Bigeminy"
+                Layout.fillWidth: true
+                Layout.preferredHeight: 45
                 isActive: simEngine ? simEngine.currentScenario === scenarioName : false
-                onClicked: {
-                    simEngine.switchScenario("data/jsonFiles/bigeminy.json")
-                    console.log("switched to bigeminy")
-                }
+                onClicked: simEngine.switchScenario("data/jsonFiles/bigeminy.json")
                 textColor: "#a0a0a0"
             }
 
             ScenarioButton {
                 scenarioName: "Ventricular Fibrillation"
+                Layout.fillWidth: true
+                Layout.preferredHeight: 45
                 isActive: simEngine ? simEngine.currentScenario === scenarioName : false
-                onClicked: {
-                    simEngine.switchScenario("data/jsonFiles/vfib.json")
-                    console.log("switched to vfib")
-                }
+                onClicked: simEngine.switchScenario("data/jsonFiles/vfib.json")
                 textColor: "#a0a0a0"
             }
+            
+            Item { Layout.fillHeight: true } 
         }
     }
 }
-
-
