@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.VirtualKeyboard
 
 Window {
     width: 1600
@@ -44,4 +45,32 @@ Window {
         source: "qml/LoginScreen.qml"
         visible: sessionManager ? sessionManager.currentUserRole === "" : false
     }
+
+    InputPanel {
+        id: inputPanel
+        z: 99 
+        y: parent.height 
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        states: State {
+            name: "visible"
+            when: inputPanel.active 
+            PropertyChanges {
+                target: inputPanel
+                y: parent.height - inputPanel.height
+            }
+        }
+        transitions: Transition {
+            from: ""
+            to: "visible"
+            reversible: true
+            NumberAnimation {
+                properties: "y"
+                duration: 250
+                easing.type: Easing.InOutQuad
+            }
+        }
+    }
+
 }
