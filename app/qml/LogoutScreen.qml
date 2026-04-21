@@ -57,7 +57,6 @@ Popup {
                 }
 
                 background: Rectangle {
-                    // Darkens slightly when pressed
                     color: confirmBtn.down ? "#1c3f77" : "#2a5caa" 
                     radius: 8
                 }

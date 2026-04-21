@@ -73,6 +73,8 @@ int main(int argc, char *argv[]) {
 
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::resetState);
+    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::resetReading);
+
 
     QObject::connect(&sessionManager, &SessionManager::userRoleChanged, [&sessionManager, &engineCore, &audioManager]() {
         if (sessionManager.getUserRole() != "") {

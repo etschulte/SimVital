@@ -53,6 +53,11 @@ void NibpController::resetState() {
     emit alarmStateChanged();
 }
 
+void NibpController::resetReading() {
+    currentNibpReading = "--";
+    currentTime = "--";
+}
+
 void NibpController::finishMeasurement() {
     bool shouldBeAlarming = false;
     std::pair<int, int> valuePair = nibpGeneratorPtr->generateReading();

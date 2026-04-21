@@ -39,6 +39,8 @@ public slots:
 
     void resetState();
 
+    void resetReading();
+
 private slots:
     void finishMeasurement();
 
