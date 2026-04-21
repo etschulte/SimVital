@@ -95,14 +95,14 @@ Rectangle {
             Layout.fillHeight: true
             Layout.preferredWidth: parent.width * 0.4
             Layout.alignment: Qt.AlignTop
-            spacing: 20
+            spacing: 8 
 
             Text {
                 text: "Register New User"
                 color: "white"
-                font.pixelSize: 24
+                font.pixelSize: 22 
                 font.bold: true
-                Layout.bottomMargin: 10
+                Layout.bottomMargin: 5 
             }
 
             TextField {
@@ -153,8 +153,8 @@ Rectangle {
             Button {
                 text: "Add User"
                 Layout.fillWidth: true
-                Layout.preferredHeight: 50
-                font.pixelSize: 18
+                Layout.preferredHeight: 35
+                font.pixelSize: 16
                 font.bold: true
                 
                 onClicked: {

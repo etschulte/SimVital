@@ -7,7 +7,6 @@ Rectangle {
     color: flashState ? "#8b0000" : "#2a2a2a" 
     radius: 8
 
-    // --- Public API for main.qml ---
     property string valueText: "--/--"
     property string lastMeasureTime: "--:--"
     property bool flashState: false
@@ -34,9 +33,8 @@ Rectangle {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 15
+        anchors.margins: 8
         
-        // --- 1. Top Section: Title and Unit ---
         ColumnLayout {
             spacing: 2
             Layout.alignment: Qt.AlignTop | Qt.AlignLeft
@@ -56,7 +54,6 @@ Rectangle {
 
         Item { Layout.fillHeight: true } 
 
-        // --- 2. Middle Section: The Main Reading ---
         Text {
             text: root.valueText
             color: "#ffffff"
@@ -67,15 +64,14 @@ Rectangle {
         
         Item { Layout.fillHeight: true } 
 
-        // --- 3. Bottom Section: Button and Timestamp ---
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
             
             Button {
                 text: "Measure"
-                Layout.preferredWidth: 100
-                Layout.preferredHeight: 35
+                Layout.preferredWidth: 85
+                Layout.preferredHeight: 30
                 
                 
                 background: Rectangle {
@@ -97,18 +93,18 @@ Rectangle {
             Item { Layout.fillWidth: true } 
             
             ColumnLayout {
-                spacing: 2
+                spacing: 0
                 Layout.alignment: Qt.AlignRight
                 
                 Text {
                     text: "Last:"
                     color: "#a0a0a0"
-                    font.pixelSize: 12
+                    font.pixelSize: 11
                 }
                 Text {
                     text: root.lastMeasureTime
                     color: "#a0a0a0"
-                    font.pixelSize: 12
+                    font.pixelSize: 11
                 }
             }
         }
