@@ -6,13 +6,6 @@ Rectangle {
     id: panelRoot
     color: "#1e1e1e"
 
-    Text {
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: "Instructor Control Panel"
-        color: "#FFFFFF"
-    }
-
     Rectangle {
         width: 800
         height: 50
@@ -31,8 +24,8 @@ Rectangle {
     }
 
     Rectangle {
-        width: 560
-        height: 500
+        width: 280
+        height: 250
         anchors.centerIn: parent
         color: "#2a2a2a"
         radius: 8
