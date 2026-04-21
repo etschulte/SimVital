@@ -54,8 +54,11 @@ void NibpController::resetState() {
 }
 
 void NibpController::resetReading() {
-    currentNibpReading = "--";
-    currentTime = "--";
+    currentNibpReading = "--/--";
+    currentTime = "--:--";
+
+    emit nibpValChanged();
+    emit timeValChanged();
 }
 
 void NibpController::finishMeasurement() {

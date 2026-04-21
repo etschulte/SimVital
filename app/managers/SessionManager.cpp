@@ -31,6 +31,7 @@ void SessionManager::logout() {
     m_isLoggedIn = false;
 
     emit userRoleChanged();
+    emit userLoggedOut();
 }
 
 QString SessionManager::getUserRole() const {

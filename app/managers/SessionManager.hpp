@@ -35,4 +35,6 @@ signals:
     void loginFailed();
 
     void loginSuccess();
+
+    void userLoggedOut();
 };

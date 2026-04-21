@@ -73,8 +73,6 @@ int main(int argc, char *argv[]) {
 
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::resetState);
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::resetReading);
-
 
     QObject::connect(&sessionManager, &SessionManager::userRoleChanged, [&sessionManager, &engineCore, &audioManager]() {
         if (sessionManager.getUserRole() != "") {
@@ -87,6 +85,7 @@ int main(int argc, char *argv[]) {
             qDebug() << "Session ended: Simulation stopped";
         }
     });
+    QObject::connect(&sessionManager, &SessionManager::userLoggedOut, &nipbController, &NibpController::resetReading);
 
     const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml"));
     engine.load(url);
