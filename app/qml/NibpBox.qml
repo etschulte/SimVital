@@ -59,7 +59,13 @@ Rectangle {
             color: "#ffffff"
             font.pixelSize: 48
             font.bold: true
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            
+            Layout.fillWidth: true
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            
+            fontSizeMode: Text.Fit
+            minimumPixelSize: 20
         }
         
         Item { Layout.fillHeight: true } 
