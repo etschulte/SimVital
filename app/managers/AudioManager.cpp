@@ -10,17 +10,16 @@ AudioManager::AudioManager(EcgController* ecg, SpO2Controller* spo2, NibpControl
     nibpPtr(nibp),
     rrPtr(rr),
     m_systemActive(false),
-    m_inAdminMenu(false)
+    m_inAdminMenu(false),
+    m_audioPlayer()
     {
     
     timerPtr = new QTimer(this);
     timerPtr->setSingleShot(true);
     connect(timerPtr, &QTimer::timeout, this, &AudioManager::evaluateAudioState);
 
-    audioPlayerPtr = new QSoundEffect(this);
-    audioPlayerPtr->setSource(QUrl("qrc:/sounds/alarm.wav"));
-    audioPlayerPtr->setLoopCount(QSoundEffect::Infinite);
-    audioPlayerPtr->setVolume(0.3);
+    m_audioPlayer = new QProcess(this);
+    connect(m_audioPlayer, &QProcess::finished, this, &AudioManager::evaluateAudioState);
 
     connect(ecgPtr, &EcgController::alarmStateChanged, this, &AudioManager::evaluateAudioState);
     connect(spo2Ptr, &SpO2Controller::alarmStateChanged, this, &AudioManager::evaluateAudioState);
@@ -28,7 +27,13 @@ AudioManager::AudioManager(EcgController* ecg, SpO2Controller* spo2, NibpControl
     connect(rrPtr, &RrController::alarmStateChanged, this, &AudioManager::evaluateAudioState);
 }
 
+AudioManager::~AudioManager() {
+    m_audioPlayer->kill();
+}
+
 void AudioManager::evaluateAudioState() {
+    QStringList qProcessArgs = {"-D", "plughw:3,0", "/home/evanpi/SimVital/data/audio/TF002.WAV"};
+
     if (!m_systemActive) {
         return;
     }
@@ -37,23 +42,25 @@ void AudioManager::evaluateAudioState() {
         || rrPtr->getIsAlarming();
     bool isSilenced = timerPtr->isActive();
 
-    if (isCrashing && !isSilenced && !audioPlayerPtr->isPlaying() && !m_inAdminMenu) {
-        audioPlayerPtr->play();
-    } else {
-        audioPlayerPtr->stop();
+    if (isCrashing && !isSilenced && m_audioPlayer->state() != QProcess::Running && !m_inAdminMenu) {
+        m_audioPlayer->start("aplay", qProcessArgs);
+    }
+
+    if (!isCrashing || isSilenced || m_inAdminMenu) {
+        m_audioPlayer->kill();
     }
 }
 
 void AudioManager::silenceAlarms() {
     timerPtr->start(120000);
-    audioPlayerPtr->stop();
+    m_audioPlayer->kill();
 }
 
 void AudioManager::setAdminMute(bool isMuted) {
     m_inAdminMenu = isMuted;
 
     if (isMuted) {
-        audioPlayerPtr->stop();
+        m_audioPlayer->kill();
     } else {
         evaluateAudioState();
     }
@@ -61,7 +68,7 @@ void AudioManager::setAdminMute(bool isMuted) {
 
 void AudioManager::reset() {
     timerPtr->stop();
-    audioPlayerPtr->stop();
+    m_audioPlayer->kill();
 }
 
 void AudioManager::setSystemActive(bool active) {
