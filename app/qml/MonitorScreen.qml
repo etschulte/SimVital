@@ -55,7 +55,7 @@ Item {
 
                 Text {
                     id: clockDisplay
-                    text: Qt.formatDate(new Date(), "MM/dd/yyyy") + "   " + Qt.formatTime(new Date(), "h:mm AP")
+                    text: Qt.formatDate(new Date(), "MM/dd/yyyy") + "   " + now.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
                     color: "#a0a0a0"
                     font.pixelSize: 16
 
@@ -65,7 +65,7 @@ Item {
                         repeat: true
                         onTriggered: {
                             var now = new Date()
-                            clockDisplay.text = Qt.formatDate(now, "MM/dd/yyyy") + "   " + Qt.formatTime(now, "h:mm AP")
+                            clockDisplay.text = Qt.formatDate(now, "MM/dd/yyyy") + "   " + now.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
                         }
                     }
                 }
@@ -142,7 +142,7 @@ Item {
                             var baseline = 1024; 
                             
                             // 3. Set a scale factor (Higher number = shorter waveform)
-                            var gain = 0.8; 
+                            var gain = 0.4; 
                             
                             for (var i = 0; i < ecgHistory.length; i++) {
                                 var x = i * xStep;
