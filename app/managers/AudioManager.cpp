@@ -32,7 +32,7 @@ AudioManager::~AudioManager() {
 }
 
 void AudioManager::evaluateAudioState() {
-    QStringList qProcessArgs = {"-D", "plughw:3,0", "/home/evanpi/SimVital/data/audio/TF002.WAV"};
+    QStringList qProcessArgs = {"-D", "plughw:CARD=UACDemoV10,0", "/home/evanpi/SimVital/data/audio/TF002.WAV"};
 
     if (!m_systemActive) {
         return;
