@@ -5,23 +5,18 @@ import QtQuick.Layouts
 Item {
     anchors.fill: parent
 
-    // An array to hold our data points
     property var ecgHistory: []
-    property int maxPoints: 400 // How many data points fit on the screen at once
+    property int maxPoints: 400 
 
-    // Listen directly to the controller's signals
     Connections {
         target: ecgController
         function onEcgValChanged(recentEcgVal) {
-            // Push the new value to the end of our array
             ecgHistory.push(recentEcgVal)
             
-            // If the array gets too long, chop off the oldest data point (creates a scrolling effect)
             if (ecgHistory.length > maxPoints) {
                 ecgHistory.shift()
             }
             
-            // Tell the Canvas it needs to redraw itself immediately
             ecgCanvas.requestPaint()
         }
     }
@@ -51,10 +46,20 @@ Item {
                 Layout.preferredHeight: 30
 
                 Text {
-                    text: sessionManager.currentUserName + "                      Role: " + sessionManager.currentUserRole
+                    id: clockDisplay
+                    text: new Date().toLocaleDateString(Qt.locale(), Locale.ShortFormat) + "   " + new Date().toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
                     color: "#a0a0a0"
                     font.pixelSize: 16
-                }
+
+                    Timer {
+                        interval: 1000 
+                        running: true
+                        repeat: true
+                        onTriggered: {
+                            var now = new Date()
+                            clockDisplay.text = now.toLocaleDateString(Qt.locale(), Locale.ShortFormat) + "   " + now.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
+                        }
+                    }
 
                 Item { Layout.fillWidth: true }
 
@@ -84,42 +89,36 @@ Item {
                             var ctx = getContext("2d");
                             ctx.clearRect(0, 0, width, height);
 
-                            // --- 1. THE MINOR GRID (Faint background) ---
-                            var minorStep = 10; // 10 pixels per small square
+                            var minorStep = 10; 
                             ctx.beginPath();
-                            ctx.strokeStyle = "#0f2b0f"; // Very dark, faint green
+                            ctx.strokeStyle = "#0f2b0f"; 
                             ctx.lineWidth = 1;
 
-                            // Vertical minor lines
                             for (var x = 0; x <= width; x += minorStep) {
                                 ctx.moveTo(x, 0);
                                 ctx.lineTo(x, height);
                             }
-                            // Horizontal minor lines
                             for (var y = 0; y <= height; y += minorStep) {
                                 ctx.moveTo(0, y);
                                 ctx.lineTo(width, y);
                             }
-                            ctx.stroke(); // Physically draw all minor lines at once
+                            ctx.stroke(); 
 
-
-                            // --- 2. THE MAJOR GRID (Slightly brighter/thicker) ---
-                            var majorStep = 50; // 50 pixels per large square (5 minor squares)
+                            var majorStep = 50; 
                             ctx.beginPath();
-                            ctx.strokeStyle = "#1a4d1a"; // Slightly brighter green
+                            ctx.strokeStyle = "#1a4d1a"; 
                             ctx.lineWidth = 1.5;
 
-                            // Vertical major lines
                             for (var x = 0; x <= width; x += majorStep) {
                                 ctx.moveTo(x, 0);
                                 ctx.lineTo(x, height);
                             }
-                            // Horizontal major lines
+
                             for (var y = 0; y <= height; y += majorStep) {
                                 ctx.moveTo(0, y);
                                 ctx.lineTo(width, y);
                             }
-                            ctx.stroke(); // Physically draw all major lines at once
+                            ctx.stroke(); 
                             
                             ctx.strokeStyle = "#00ff00";
                             ctx.lineWidth = 2;
@@ -129,20 +128,15 @@ Item {
                             
                             var xStep = width / maxPoints;
                             
-                            // 1. Find the exact vertical center of the canvas
                             var centerY = height / 2;
                             
-                            // 2. Set the expected baseline (MIT-BIH is usually 1024, sometimes 0)
                             var baseline = 1024; 
                             
-                            // 3. Set a scale factor (Higher number = shorter waveform)
-                            var gain = 0.8; 
+                            var gain = 0.4; 
                             
                             for (var i = 0; i < ecgHistory.length; i++) {
                                 var x = i * xStep;
                                 
-                                // --- THE NEW SCALING MATH ---
-                                // Subtract the baseline first, then scale it, then apply it to the center
                                 var normalizedValue = (ecgHistory[i] - baseline) * gain;
                                 var y = centerY - normalizedValue; 
                                 
@@ -164,42 +158,38 @@ Item {
                             var ctx = getContext("2d");
                             ctx.clearRect(0, 0, width, height);
 
-                            // --- 1. THE MINOR GRID (Faint background) ---
-                            var minorStep = 10; // 10 pixels per small square
+                            var minorStep = 10; 
                             ctx.beginPath();
-                            ctx.strokeStyle = "#0f2b0f"; // Very dark, faint green
+                            ctx.strokeStyle = "#0f2b0f"; 
                             ctx.lineWidth = 1;
 
-                            // Vertical minor lines
                             for (var x = 0; x <= width; x += minorStep) {
                                 ctx.moveTo(x, 0);
                                 ctx.lineTo(x, height);
                             }
-                            // Horizontal minor lines
+
                             for (var y = 0; y <= height; y += minorStep) {
                                 ctx.moveTo(0, y);
                                 ctx.lineTo(width, y);
                             }
-                            ctx.stroke(); // Physically draw all minor lines at once
+                            ctx.stroke(); 
 
 
-                            // --- 2. THE MAJOR GRID (Slightly brighter/thicker) ---
-                            var majorStep = 50; // 50 pixels per large square (5 minor squares)
+                            var majorStep = 50; 
                             ctx.beginPath();
-                            ctx.strokeStyle = "#1a4d1a"; // Slightly brighter green
+                            ctx.strokeStyle = "#1a4d1a"; 
                             ctx.lineWidth = 1.5;
 
-                            // Vertical major lines
                             for (var x = 0; x <= width; x += majorStep) {
                                 ctx.moveTo(x, 0);
                                 ctx.lineTo(x, height);
                             }
-                            // Horizontal major lines
+
                             for (var y = 0; y <= height; y += majorStep) {
                                 ctx.moveTo(0, y);
                                 ctx.lineTo(width, y);
                             }
-                            ctx.stroke(); // Physically draw all major lines at once
+                            ctx.stroke(); 
 
                             ctx.strokeStyle = "#00bfff";
                             ctx.lineWidth = 2;
@@ -209,20 +199,16 @@ Item {
                             
                             var xStep = width / maxPoints;
                             
-                            // 1. Find the exact vertical center of the canvas
                             var centerY = height / 2;
                             
-                            // 2. Set the expected baseline (MIT-BIH is usually 1024, sometimes 0)
                             var baseline = 0; 
                             
-                            // 3. Set a scale factor (Higher number = shorter waveform)
                             var gain = 50; 
                             
                             for (var i = 0; i < spo2History.length; i++) {
                                 var x = i * xStep;
                                 
-                                // --- THE NEW SCALING MATH ---
-                                // Subtract the baseline first, then scale it, then apply it to the center
+                                
                                 var normalizedValue = (spo2History[i] - baseline) * gain;
                                 var y = centerY - normalizedValue; 
                                 
