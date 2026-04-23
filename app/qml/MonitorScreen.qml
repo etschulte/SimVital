@@ -60,6 +60,7 @@ Item {
                             clockDisplay.text = now.toLocaleDateString(Qt.locale(), Locale.ShortFormat) + "   " + now.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
                         }
                     }
+                }
 
                 Item { Layout.fillWidth: true }
 
