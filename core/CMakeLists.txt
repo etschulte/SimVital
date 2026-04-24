@@ -16,6 +16,7 @@ add_library(SimVitalCore STATIC
     src/SimulationEngine.cpp
     src/DatabaseManager.cpp
     include/DatabaseManager.hpp
+    src/EcgGenerator.cpp
 )
 
 target_include_directories(SimVitalCore PUBLIC

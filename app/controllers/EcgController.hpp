@@ -5,38 +5,31 @@
 #include "MitBihParser.hpp"
 #include "RingBuffer.hpp"
 #include "PatientScenario.hpp"
+#include "EcgGenerator.hpp"
 
 
 class EcgController : public QObject {
-    Q_OBJECT // QObject Macro
-    Q_PROPERTY(int ecgVal READ getEcgVal NOTIFY ecgValChanged) // QProperty Macro
+    Q_OBJECT 
+    Q_PROPERTY(int ecgVal READ getEcgVal NOTIFY ecgValChanged)
     Q_PROPERTY(int hrVal READ getHRVal NOTIFY hrValChanged)
     Q_PROPERTY(bool isAlarming READ getIsAlarming NOTIFY alarmStateChanged)
 
 private:
-    MitBihParser* parserPtr; // Pointer to the MitBihParser so that we can use that object when created in main
-    RingBuffer* bufferPtr; // Pointer to RingBuffer so we can use that object when created in main
-    QTimer* timerPtr; // Pointer to QTimer to act as a pacemaker for pulling data
-    int recentEcgVal; // Most recent ECG value
-
-    int threshold; // threshold data must cross
-    int slopeThreshold;
-    bool wasAboveThreshold; // checks if current value is above threshold
-    int samplesSinceLastBeat; // increments for each data point
-    int refractoryCounter; // cooldown timer
-    int m_currentBpm; // stores calculated current BPM
-    bool seenFirstPeak; // tracks if we have seen the first peak yet
+    MitBihParser* parserPtr; 
+    RingBuffer* bufferPtr; 
+    QTimer* timerPtr; 
+    EcgGenerator* ecgGenPtr;
+    
     int upperLimit;
     int lowerLimit;
     bool isAlarming;
     bool isSilenced;
 
 public:
-    const int sampleRate = 360; // amount of data points that equal 1 second
-    const int refractoryPeriod = 90;  // amount of samples we want to ignore the data for
+    
 
     // Contstructor and destructor 
-    EcgController(MitBihParser* parser, RingBuffer* buffer, QObject* parent = nullptr);
+    EcgController(MitBihParser* parser, RingBuffer* buffer, EcgGenerator* generator, QObject* parent = nullptr);
     ~EcgController();
 
     // getter class for ECG value
@@ -45,7 +38,7 @@ public:
     // getter class for heart rate value
     int getHRVal() const;
 
-    void setThresholds(const PatientScenario& scenario);
+    void passThresholdsToGen(const PatientScenario& scenario);
 
     bool getIsAlarming() const;
 

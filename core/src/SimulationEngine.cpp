@@ -100,5 +100,9 @@ ScenarioManager* SimulationEngine::getScenarioManager() {
     return &manager;
 }
 
+EcgGenerator* SimulationEngine::getEcgGen() {
+    return &ecgGen;
+}
+
 #include "moc_SimulationEngine.cpp"
 

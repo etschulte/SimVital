@@ -10,6 +10,7 @@
 #include "SpO2WaveGenerator.hpp"
 #include "ScenarioManager.hpp"
 #include "PatientScenario.hpp"
+#include "EcgGenerator.hpp"
 
 class SimulationEngine : public QObject {
     Q_OBJECT
@@ -22,6 +23,7 @@ private:
     NibpGenerator nibpGen;
     RrGenerator rrGen;
     SpO2Generator spo2Gen;
+    EcgGenerator ecgGen;
     SpO2WaveGenerator spo2WaveGen;
     QString m_currentScenario;
     std::thread thread;
@@ -54,6 +56,8 @@ public:
     SpO2WaveGenerator* getSpO2WaveGen();
 
     ScenarioManager* getScenarioManager();
+
+    EcgGenerator* getEcgGen();
 
 signals:
     void currentScenarioChanged();

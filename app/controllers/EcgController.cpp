@@ -1,19 +1,12 @@
 #include "EcgController.hpp"
 #include <QDebug>
 
-EcgController::EcgController(MitBihParser* parser, RingBuffer* buffer, QObject* parent) 
+EcgController::EcgController(MitBihParser* parser, RingBuffer* buffer, EcgGenerator* generator, QObject* parent) 
     : QObject(parent), 
     parserPtr(parser), 
     bufferPtr(buffer),
-    timerPtr(nullptr), 
-    recentEcgVal(0),
-    threshold(1100),
-    slopeThreshold(50),
-    wasAboveThreshold(false),
-    samplesSinceLastBeat(0),
-    refractoryCounter(0),
-    m_currentBpm(0) ,
-    seenFirstPeak(false),
+    ecgGenPtr(generator),
+    timerPtr(nullptr),    
     upperLimit(120),
     lowerLimit(50),
     isAlarming(false),
@@ -21,28 +14,25 @@ EcgController::EcgController(MitBihParser* parser, RingBuffer* buffer, QObject* 
     {
 
     timerPtr = new QTimer(this);
-    connect(timerPtr, &QTimer::timeout, this, &EcgController::onTick); // registering timer callback 
-    timerPtr->start(1000 / sampleRate);
+    connect(timerPtr, &QTimer::timeout, this, &EcgController::onTick); 
+    timerPtr->start(1000 / ecgGenPtr->sampleRate);
 
 }
-
 
 EcgController::~EcgController() {}
 
 int EcgController::getEcgVal() const {
-    return recentEcgVal;
+    return ecgGenPtr->getRecentEcgVal();
 }
 
 int EcgController::getHRVal() const {
-    return m_currentBpm;
+    return ecgGenPtr->getCurrentBpm();
 }
 
-void EcgController::setThresholds(const PatientScenario& scenario) {
-    threshold = scenario.ecgThreshold;
-    slopeThreshold = scenario.ecgSlopeThreshold;
-    wasAboveThreshold = false;
-    seenFirstPeak = false;
-    samplesSinceLastBeat = 0;
+void EcgController::passThresholdsToGen(const PatientScenario& scenario) {
+    if (ecgGenPtr) {
+        ecgGenPtr->setThresholds(scenario.ecgThreshold, scenario.ecgSlopeThreshold);
+    }
 }
 
 bool EcgController::getIsAlarming() const {
@@ -55,7 +45,6 @@ void EcgController::loadLimits(const PatientScenario& scenario) {
 }
 
 void EcgController::updateAlarm(bool alarmStatus) {
-
     if (isAlarming != alarmStatus) {
         isAlarming = alarmStatus;
 
@@ -65,58 +54,35 @@ void EcgController::updateAlarm(bool alarmStatus) {
 
         emit alarmStateChanged();
     }
-
 }
 
 void EcgController::resetState() {
     isAlarming = false;
-
     emit alarmStateChanged();
 }
 
 void EcgController::onTick() {
     int nextVal = 0;
-    bool shouldBeAlarming = false;
+    int m_recentEcgVal = getEcgVal();
+    int m_currentBpm = getHRVal();
 
     if (bufferPtr->read(nextVal)) {
-        int slope = nextVal - recentEcgVal;
+        
+        m_recentEcgVal = nextVal;
+        emit ecgValChanged(m_recentEcgVal);
 
-        recentEcgVal = nextVal;
-        emit ecgValChanged(recentEcgVal);
-
-        samplesSinceLastBeat++;
-
-        if (refractoryCounter > 0) {
-            refractoryCounter--;
-        }
-
-        if (samplesSinceLastBeat > (sampleRate * 2.5)) {
-            if (m_currentBpm != 0) {
-                m_currentBpm = 0;
-                emit hrValChanged(m_currentBpm);
-
-                shouldBeAlarming = (m_currentBpm <= lowerLimit || m_currentBpm >= upperLimit);
-                updateAlarm(shouldBeAlarming);
-            }
-        }
-
-        if (refractoryCounter == 0 && recentEcgVal > threshold && slope > slopeThreshold && wasAboveThreshold == false) {
+        if (ecgGenPtr) {
+            ecgGenPtr->calculateEcgValues(nextVal);
             
-            if (seenFirstPeak == false) {
-                seenFirstPeak = true;
-            } else {
-                m_currentBpm = (60 * sampleRate) / samplesSinceLastBeat;
+            int newBpm = ecgGenPtr->getCurrentBpm();
+
+            if (newBpm != m_currentBpm) {
+                m_currentBpm = newBpm;
                 emit hrValChanged(m_currentBpm);
-
-                shouldBeAlarming = (m_currentBpm <= lowerLimit || m_currentBpm >= upperLimit);
-                updateAlarm(shouldBeAlarming);
             }
+        }
 
-            samplesSinceLastBeat = 0;
-            refractoryCounter = refractoryPeriod;
-        }   
-
-        wasAboveThreshold = (recentEcgVal > threshold);
+        bool shouldBeAlarming = (m_currentBpm <= lowerLimit || m_currentBpm >= upperLimit);
+        updateAlarm(shouldBeAlarming);
     }
-    
 }

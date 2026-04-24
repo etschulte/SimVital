@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     DatabaseManager dbManager;
     dbManager.initDatabase();
 
-    EcgController ecgController(engineCore.getParser(), engineCore.getBuffer());
+    EcgController ecgController(engineCore.getParser(), engineCore.getBuffer(), engineCore.getEcgGen());
     SpO2Controller spo2Controller(engineCore.getSpO2Gen());
     SpO2WaveController spo2WaveController(engineCore.getSpO2WaveGen());
     RrController rrController(engineCore.getRRGen());
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2WaveGen(), &SpO2WaveGenerator::setHeartRate);
     QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2Gen(), &SpO2Generator::setHeartRate);
     
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::setThresholds);
+    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::passThresholdsToGen);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::loadLimits);
     QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::resetState);
 
