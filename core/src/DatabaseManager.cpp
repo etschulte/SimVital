@@ -11,6 +11,7 @@ DatabaseManager::DatabaseManager(QObject* parent)
     } else {
         dbConnection = QSqlDatabase::addDatabase("QSQLITE");
         dbConnection.setDatabaseName("simvital.db");
+        initDatabase();
     }
 }
 

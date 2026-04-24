@@ -1,91 +1,14 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QQmlContext>
-#include <thread>
-#include <chrono>
-#include <QDebug>
-#include <QObject>
-#include <QQmlContext>
 
-#include "../core/include/MitBihParser.hpp"
-#include "../core/include/RingBuffer.hpp"
-#include "controllers/EcgController.hpp"
-#include "../core/include/ScenarioManager.hpp"
-#include "../core/include/PatientScenario.hpp"
-#include "controllers/SpO2Controller.hpp"
-#include "../core/include/SpO2Generator.hpp"
-#include "controllers/SpO2WaveController.hpp"
-#include "../core/include/SpO2WaveGenerator.hpp"
-#include "controllers/RrController.hpp"
-#include "../core/include/RrGenerator.hpp"
-#include "controllers/NibpController.hpp"
-#include "../core/include/NibpGenerator.hpp"
-#include "../core/include/SimulationEngine.hpp"
-#include "managers/AudioManager.hpp"
-#include "../core/include/DatabaseManager.hpp"
-#include "managers/SessionManager.hpp"
-#include "managers/AdminManager.hpp"
-
-
-//TODO: Refactor into AppManager
+#include "managers/AppManager.hpp"
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
+    AppManager appManager;
 
-    SimulationEngine engineCore;
-
-    DatabaseManager dbManager;
-    dbManager.initDatabase();
-
-    EcgController ecgController(engineCore.getParser(), engineCore.getBuffer(), engineCore.getEcgGen());
-    SpO2Controller spo2Controller(engineCore.getSpO2Gen());
-    SpO2WaveController spo2WaveController(engineCore.getSpO2WaveGen());
-    RrController rrController(engineCore.getRRGen());
-    NibpController nipbController(engineCore.getNibpGen());
-
-    AudioManager audioManager(&ecgController, &spo2Controller, &nipbController, &rrController);
-    SessionManager sessionManager(&dbManager);
-    AdminManager adminManager(&dbManager);
-
-    engine.rootContext()->setContextProperty("ecgController", &ecgController);
-    engine.rootContext()->setContextProperty("spo2Controller", &spo2Controller);
-    engine.rootContext()->setContextProperty("spo2WaveController", &spo2WaveController);
-    engine.rootContext()->setContextProperty("rrController", &rrController);
-    engine.rootContext()->setContextProperty("nibpController", &nipbController);
-    engine.rootContext()->setContextProperty("simEngine", &engineCore);
-    engine.rootContext()->setContextProperty("audioManager", &audioManager);
-    engine.rootContext()->setContextProperty("sessionManager", &sessionManager);
-    engine.rootContext()->setContextProperty("adminManager", &adminManager);
-    
-    QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2WaveGen(), &SpO2WaveGenerator::setHeartRate);
-    QObject::connect(&ecgController, &EcgController::hrValChanged, engineCore.getSpO2Gen(), &SpO2Generator::setHeartRate);
-    
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::passThresholdsToGen);
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::loadLimits);
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &ecgController, &EcgController::resetState);
-
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &spo2Controller, &SpO2Controller::loadLimits);
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &spo2Controller, &SpO2Controller::resetState);
-    
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &rrController, &RrController::loadLimits);
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &rrController, &RrController::resetState);
-
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::loadLimits);
-    QObject::connect(&engineCore, &SimulationEngine::scenarioLoaded, &nipbController, &NibpController::resetState);
-
-    QObject::connect(&sessionManager, &SessionManager::userRoleChanged, [&sessionManager, &engineCore, &audioManager]() {
-        if (sessionManager.getUserRole() != "") {
-            engineCore.startSimulation();
-            audioManager.setSystemActive(true);
-            qDebug() << "Session active: Simulation started";
-        } else {
-            engineCore.stopSimulation();
-            audioManager.setSystemActive(false);
-            qDebug() << "Session ended: Simulation stopped";
-        }
-    });
-    QObject::connect(&sessionManager, &SessionManager::userLoggedOut, &nipbController, &NibpController::resetReading);
+    appManager.setContext(&engine);
 
     const QUrl url(QStringLiteral("qrc:/qt/qml/SimVital/main.qml"));
     engine.load(url);
