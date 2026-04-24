@@ -41,31 +41,66 @@ Item {
             anchors.margins: 15
             spacing: 15
 
-            RowLayout {
+            Rectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 30
+                Layout.preferredHeight: 45
+                color: "#2a2a2a" 
+                radius: 8
+                border.color: "#2a2a35"
+                border.width: 1
 
-                Text {
-                    text: sessionManager.currentUserName + "                      Role: " + sessionManager.currentUserRole
-                    color: "#a0a0a0"
-                    font.pixelSize: 16
-                }
+                RowLayout {
+                    anchors.fill: parent
+                    anchors.leftMargin: 15
+                    anchors.rightMargin: 15
 
-                Item { Layout.fillWidth: true }
+                    RowLayout {
+                        spacing: 12
+                        Text {
+                            text: sessionManager.currentUserName
+                            color: "#ffffff" 
+                            font.pixelSize: 18
+                            font.bold: true
+                        }
+                        
+                        Rectangle {
+                            Layout.preferredWidth: 2
+                            Layout.preferredHeight: 20
+                            color: "#404040" 
+                        }
+                        
+                        Text {
+                            text: sessionManager.currentUserRole
+                            color: "#5276a0" 
+                            font.pixelSize: 14
+                        }
+                    }
 
-                Text {
-                    id: clockDisplay
-                    text: Qt.formatDate(new Date(), "MM/dd/yyyy") + "   " + Qt.formatTime(new Date(), "hh:mm")
-                    color: "#a0a0a0"
-                    font.pixelSize: 16
+                    Item { Layout.fillWidth: true }
 
-                    Timer {
-                        interval: 1000 
-                        running: true
-                        repeat: true
-                        onTriggered: {
-                            var now = new Date()
-                            clockDisplay.text = Qt.formatDate(now, "MM/dd/yyyy") + "   " + Qt.formatTime(now, "hh:mm")
+                    RowLayout {
+                        spacing: 15
+                        Text {
+                            text: Qt.formatDate(new Date(), "MM/dd/yyyy")
+                            color: "#ffffff"
+                            font.pixelSize: 18
+                            font.bold: true
+                        }
+                        Text {
+                            id: clockDisplay
+                            text: Qt.formatTime(new Date(), "hh:mm")
+                            color: "#ffffff"
+                            font.pixelSize: 18
+                            font.bold: true
+
+                            Timer {
+                                interval: 1000 
+                                running: true
+                                repeat: true
+                                onTriggered: {
+                                    clockDisplay.text = Qt.formatTime(new Date(), "hh:mm")
+                                }
+                            }
                         }
                     }
                 }
