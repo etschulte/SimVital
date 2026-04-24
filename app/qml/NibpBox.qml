@@ -52,8 +52,6 @@ Rectangle {
             }
         }
 
-        Item { Layout.fillHeight: true } 
-
         Text {
             text: root.valueText
             color: "#ffffff"
@@ -61,6 +59,7 @@ Rectangle {
             font.bold: true
             
             Layout.fillWidth: true
+            Layout.fillHeight: true
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             
@@ -68,8 +67,6 @@ Rectangle {
             minimumPixelSize: 20
         }
         
-        Item { Layout.fillHeight: true } 
-
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
