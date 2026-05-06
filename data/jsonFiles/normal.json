@@ -1,7 +1,7 @@
 {
   "name": "Normal Sinus Rhythm",
   "ecgFile": "data/datFiles/100.dat",
-  "startingIndex": 0,
+  "startingIndex": 15000,
   "Spo2": 98,
   "Spo2UpperAlarm": 100,
   "Spo2LowerAlarm": 90,
