@@ -8,9 +8,9 @@
 
 class MitBihParser {
 private:
-    std::ifstream fileStream; //file handler
-    bool secondSamplePending; //flag value for leftover values
-    int pendingSampleVal; //storage for leftover value
+    std::ifstream fileStream; 
+    bool secondSamplePending; 
+    int pendingSampleVal; 
 
 public:
     MitBihParser();

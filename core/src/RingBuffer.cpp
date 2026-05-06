@@ -16,11 +16,9 @@ bool RingBuffer::write(int sample) {
         return false;
     }
 
-    // writes sample data to current writePointer position and moves pointer to next
     buffer[writePointer] = sample;
     writePointer++;
 
-    // resets writePointer position to 0 if it is at the end of the buffer
     if (writePointer >= capacity) {
         writePointer = 0;
     }
@@ -36,11 +34,9 @@ bool RingBuffer::read(int &sample) {
         return false;
     }
 
-    // reads value at current readPointer position and moves pointer to next
     sample = buffer[readPointer];
     readPointer++;
 
-    // resets readPointer position to 0 if it is at the end of the buffer
     if (readPointer >= capacity) {
         readPointer = 0;
     }

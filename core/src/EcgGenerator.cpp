@@ -56,8 +56,6 @@ void EcgGenerator::calculateEcgValues(int bufferData) {
             samplesSinceLastBeat = 0;
             refractoryCounter = refractoryPeriod;
     }   
-
     wasAboveThreshold = (m_recentEcgVal > ecgThreshold);
-    
 }
 

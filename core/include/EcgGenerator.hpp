@@ -1,7 +1,6 @@
 #pragma once
 
 class EcgGenerator {
-
 private:
     int m_recentEcgVal; 
     int ecgThreshold; 

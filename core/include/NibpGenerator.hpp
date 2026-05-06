@@ -8,9 +8,7 @@ private:
     int diastolicVal;
 
 public:
-
     NibpGenerator();
-
     NibpGenerator(int systolicVal, int diastolicVal);
 
     void setSystolicVal(int newSystolic);

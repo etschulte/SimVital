@@ -8,7 +8,6 @@
 #include <QString>
 #include <QDebug>
 
-
 PatientScenario ScenarioManager::loadScenario(const QString& jsonFile) const {
     PatientScenario scenario;
     QFile file(jsonFile);

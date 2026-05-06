@@ -115,8 +115,7 @@ UserData DatabaseManager::verifyUser(const QString& username, const QString& pas
     return userData;
 }
 
-bool DatabaseManager::addUser(const QString& firstName, const QString& lastName, const QString& role, const QString& username, const QString& password) {
-    
+bool DatabaseManager::addUser(const QString& firstName, const QString& lastName, const QString& role, const QString& username, const QString& password) { 
     QByteArray passwordStr = password.toUtf8();
     QByteArray hashedData = QCryptographicHash::hash(passwordStr, QCryptographicHash::Sha256);
     QString hashedPassword = QString(hashedData.toHex()); 

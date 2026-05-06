@@ -4,11 +4,11 @@
 
 class RingBuffer {
 private:
-    std::vector<int> buffer; // fixed size array that holds 12 bit heart arrythmia data
-    int capacity; // how much data the buffer holds
-    int writePointer; // tracks where the next incoming bit of data will be saved
-    int readPointer; // tracks where the next outgoing bit of data will be read from
-    int currentCounter; // tracks how many unread samples are currently in the buffer
+    std::vector<int> buffer; 
+    int capacity; 
+    int writePointer; 
+    int readPointer; 
+    int currentCounter; 
 
 public:
     RingBuffer(int size);

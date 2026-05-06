@@ -20,7 +20,6 @@
 #include "../core/include/NibpGenerator.hpp"
 #include "../core/include/DatabaseManager.hpp"
 
-
 class AppManager {
 
 private:

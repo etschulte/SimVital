@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 
 Rectangle {
-    height: 80 // Increased slightly to give the 70px buttons room to breathe
+    height: 80 
     color: "#2a2a2a"
     radius: 8
 

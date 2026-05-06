@@ -7,7 +7,6 @@
 #include "PatientScenario.hpp"
 #include "EcgGenerator.hpp"
 
-
 class EcgController : public QObject {
     Q_OBJECT 
     Q_PROPERTY(int ecgVal READ getEcgVal NOTIFY ecgValChanged)
@@ -26,16 +25,11 @@ private:
     bool isSilenced;
 
 public:
-    
-
-    // Contstructor and destructor 
     EcgController(MitBihParser* parser, RingBuffer* buffer, EcgGenerator* generator, QObject* parent = nullptr);
     ~EcgController();
 
-    // getter class for ECG value
     int getEcgVal() const;
 
-    // getter class for heart rate value
     int getHRVal() const;
 
     void passThresholdsToGen(const PatientScenario& scenario);
@@ -43,10 +37,8 @@ public:
     bool getIsAlarming() const;
 
 signals:
-    // Signals that the ECG value has changed
     void ecgValChanged(int ecgVal);
 
-    // Signlas that the heart rate value has changed
     void hrValChanged(int hrVal);
 
     void alarmStateChanged();
@@ -59,6 +51,5 @@ public slots:
     void resetState();
 
 private slots:
-    // Callback for QTimer to grab next number from buffer
     void onTick();
 };
